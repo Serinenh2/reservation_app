@@ -1,6 +1,4 @@
-import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { FullPageSpinner } from '@/components/ui'
 import AppShell from '@/components/layout/AppShell'
 import RequireAuth from '@/features/auth/RequireAuth'
 import LoginPage from '@/features/auth/LoginPage'
@@ -14,9 +12,6 @@ import ReservationFormPage from '@/features/reservations/ReservationFormPage'
 import ReservationDetailPage from '@/features/reservations/ReservationDetailPage'
 import CalendarPage from '@/features/calendar/CalendarPage'
 import BlockedDatesPage from '@/features/calendar/BlockedDatesPage'
-
-// Loaded only when opened (contains the charts library).
-const DesignSystemPage = lazy(() => import('@/pages/DesignSystemPage'))
 
 export default function App() {
   return (
@@ -39,14 +34,6 @@ export default function App() {
             <Route path="admin/services" element={<CatalogPage key="services" kind="services" />} />
             <Route path="admin/blocked-dates" element={<BlockedDatesPage />} />
             <Route path="settings" element={<SettingsPage />} />
-            <Route
-              path="design-system"
-              element={
-                <Suspense fallback={<FullPageSpinner />}>
-                  <DesignSystemPage />
-                </Suspense>
-              }
-            />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Route>

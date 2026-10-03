@@ -1,6 +1,6 @@
 # Design system
 
-Live version inside the app: **Administration → Système de design**
+Reference for the colors, type and components used in the app.
 (switch language and theme to see every state).
 
 ## Direction
