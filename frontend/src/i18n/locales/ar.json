@@ -5,7 +5,6 @@
   },
   "nav": {
     "main": "القائمة الرئيسية",
-    "dashboard": "لوحة التحكم",
     "calendar": "التقويم",
     "reservations": "الحجوزات",
     "clients": "العملاء",
@@ -85,31 +84,11 @@
     "ar": "العربية"
   },
   "dashboard": {
-    "title": "لوحة التحكم",
-    "subtitle": "نظرة عامة على نشاطك.",
-    "todayReservations": "حجوزات اليوم",
-    "upcomingReservations": "الحجوزات القادمة",
-    "reservationCount": "عدد الحجوزات",
-    "reservedDates": "التواريخ المحجوزة",
     "totalAmount": "إجمالي مبلغ الحجوزات",
     "paidAmount": "المبلغ المدفوع",
     "remainingAmount": "المبلغ المتبقي",
-    "revenueChart": "المبالغ حسب الشهر",
     "noData": "لا توجد حجوزات بعد",
-    "noDataText": "ستظهر الأرقام والرسم البياني بعد أول حجز.",
-    "createFirst": "حجز جديد",
-    "upcomingEmpty": "لا توجد حجوزات قادمة.",
-    "systemStatus": "حالة النظام",
-    "database": "قاعدة البيانات",
-    "queue": "المهام في الخلفية",
-    "statusOk": "يعمل",
-    "statusInline": "وضع مباشر (بدون Redis)",
-    "statusError": "غير متاح",
-    "revenueChartHint": "مجموع الحجوزات حسب شهر المناسبة (دون الملغاة).",
-    "previousYear": "السنة السابقة",
-    "nextYear": "السنة التالية",
-    "showTable": "عرض الأرقام في جدول",
-    "month": "الشهر"
+    "createFirst": "حجز جديد"
   },
   "settings": {
     "title": "الإعدادات",

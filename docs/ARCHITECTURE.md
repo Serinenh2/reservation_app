@@ -47,7 +47,7 @@ backend/
     clients/         Client (search by name or phone, totals per client)
     catalog/         Occasion, ExtraService (never deleted: archived)
     reservations/    Reservation, ReservationService, Payment, BlockedDate,
-                     services.py (prices, overlaps, status), calendar, dashboard
+                     services.py (prices, overlaps, status), calendar
     -- planned --
     backups/         Phase 6
 ```
@@ -78,7 +78,6 @@ tested without HTTP.
 | DELETE | `/api/reservations/<id>/payments/<payment_id>/` | staff |
 | GET / POST / DELETE | `/api/blocked-dates/` (`?upcoming=1`) | read: logged in, write: staff |
 | GET | `/api/calendar/?start=&end=` (max 62 days) | logged in |
-| GET | `/api/dashboard/?year=` | logged in |
 
 Validation errors are short codes (`{"event_date": ["time_conflict"]}`);
 the frontend translates them from `errors.codes.*` in the locale files.
@@ -113,7 +112,6 @@ frontend/src/
   features/catalog/      occasions + services (one page, two kinds)
   features/reservations/ list, form, detail + payments, pricing preview
   features/calendar/     month view, blocked dates
-  features/dashboard/    revenue chart (lazy-loaded)
 ```
 
 A feature folder will contain its API hooks (`api.js`), its components,

@@ -1,4 +1,4 @@
-import { CalendarDays, ClipboardList, LayoutDashboard, Users, Heart, PartyPopper, Sparkles, Ban, Settings, Palette } from 'lucide-react'
+import { CalendarDays, ClipboardList, Users, Heart, PartyPopper, Sparkles, Ban, Settings, Palette } from 'lucide-react'
 
 /**
  * The sidebar menu. To add a page: add a line here + a route in App.jsx.
@@ -7,7 +7,6 @@ import { CalendarDays, ClipboardList, LayoutDashboard, Users, Heart, PartyPopper
 export const NAV_SECTIONS = [
   {
     items: [
-      { to: '/', label: 'nav.dashboard', icon: LayoutDashboard, end: true },
       { to: '/calendar', label: 'nav.calendar', icon: CalendarDays },
       { to: '/reservations', label: 'nav.reservations', icon: ClipboardList },
       { to: '/clients', label: 'nav.clients', icon: Users },

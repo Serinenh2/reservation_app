@@ -5,7 +5,6 @@
   },
   "nav": {
     "main": "Navigation principale",
-    "dashboard": "Tableau de bord",
     "calendar": "Calendrier",
     "reservations": "Réservations",
     "clients": "Clients",
@@ -85,31 +84,11 @@
     "ar": "العربية"
   },
   "dashboard": {
-    "title": "Tableau de bord",
-    "subtitle": "Vue d'ensemble de votre activité.",
-    "todayReservations": "Réservations aujourd'hui",
-    "upcomingReservations": "Prochaines réservations",
-    "reservationCount": "Nombre de réservations",
-    "reservedDates": "Dates réservées",
     "totalAmount": "Montant total des réservations",
     "paidAmount": "Montant payé",
     "remainingAmount": "Montant restant",
-    "revenueChart": "Montants par mois",
     "noData": "Aucune réservation pour l'instant",
-    "noDataText": "Les chiffres et le graphique se rempliront dès la première réservation.",
-    "createFirst": "Nouvelle réservation",
-    "upcomingEmpty": "Aucune réservation à venir.",
-    "systemStatus": "État du système",
-    "database": "Base de données",
-    "queue": "Tâches en arrière-plan",
-    "statusOk": "Opérationnel",
-    "statusInline": "Mode direct (sans Redis)",
-    "statusError": "Indisponible",
-    "revenueChartHint": "Total des réservations par mois de l'événement (hors annulées).",
-    "previousYear": "Année précédente",
-    "nextYear": "Année suivante",
-    "showTable": "Voir les chiffres en tableau",
-    "month": "Mois"
+    "createFirst": "Nouvelle réservation"
   },
   "settings": {
     "title": "Paramètres",

@@ -1,8 +1,7 @@
 from datetime import date
 
 from django.db import transaction
-from django.db.models import Count, Q, Sum
-from django.db.models.functions import ExtractMonth
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import mixins, status, viewsets
@@ -178,55 +177,4 @@ class CalendarView(APIView):
         return Response({
             "reservations": ReservationListSerializer(reservations, many=True).data,
             "blocked": BlockedDateSerializer(blocked, many=True).data,
-        })
-
-
-class DashboardView(APIView):
-    """
-    GET /api/dashboard/?year=2026
-    The figures of the dashboard (cancelled reservations never count)
-    + amounts per month for the chart + the next 5 events.
-    """
-
-    def get(self, request):
-        today = timezone.localdate()
-        try:
-            year = int(request.query_params.get("year", today.year))
-        except ValueError:
-            raise ValidationError({"year": ["invalid_date"]})
-
-        active = Reservation.objects.exclude(status=Reservation.Status.CANCELLED)
-        money = active.aggregate(total=Sum("total"), paid=Sum("paid_amount"))
-        total, paid = money["total"] or 0, money["paid"] or 0
-
-        per_month = {
-            row["month"]: row
-            for row in active.filter(event_date__year=year)
-            .annotate(month=ExtractMonth("event_date"))
-            .values("month")
-            .annotate(total=Sum("total"), paid=Sum("paid_amount"), count=Count("id"))
-        }
-        months = [
-            {
-                "month": m,
-                "total": per_month.get(m, {}).get("total") or 0,
-                "paid": per_month.get(m, {}).get("paid") or 0,
-                "count": per_month.get(m, {}).get("count") or 0,
-            }
-            for m in range(1, 13)
-        ]
-
-        upcoming = active.filter(event_date__gte=today).select_related("client", "occasion", "event_type").order_by("event_date", "start_time")
-        return Response({
-            "today": active.filter(event_date=today).count(),
-            "upcoming": active.filter(event_date__gt=today).count(),
-            "count": active.count(),
-            "reserved_dates": active.values("event_date").distinct().count(),
-            "total": total,
-            "paid": paid,
-            "remaining": max(total - paid, 0),
-            "pending": active.filter(status=Reservation.Status.PENDING, event_date__gte=today).count(),
-            "year": year,
-            "months": months,
-            "next": ReservationListSerializer(upcoming[:5], many=True).data,
         })

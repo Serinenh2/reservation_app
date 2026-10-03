@@ -1,10 +1,9 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { FullPageSpinner } from '@/components/ui'
 import AppShell from '@/components/layout/AppShell'
 import RequireAuth from '@/features/auth/RequireAuth'
 import LoginPage from '@/features/auth/LoginPage'
-import DashboardPage from '@/pages/DashboardPage'
 import SettingsPage from '@/pages/SettingsPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import ClientsPage from '@/features/clients/ClientsPage'
@@ -26,7 +25,8 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<RequireAuth />}>
           <Route element={<AppShell />}>
-            <Route index element={<DashboardPage />} />
+            {/* The app opens on the calendar */}
+            <Route index element={<Navigate to="/calendar" replace />} />
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="reservations" element={<ReservationsPage />} />
             <Route path="reservations/new" element={<ReservationFormPage />} />

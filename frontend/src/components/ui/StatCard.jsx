@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn'
 
 /**
- * A dashboard figure. `tone` adds a thin colored rule on the start side,
+ * A money figure (reservation and client pages). `tone` adds a thin colored rule on the start side,
  * only for money states (paid = success, remaining = warning).
  */
 export default function StatCard({ label, value, hint, icon: Icon, tone, loading }) {

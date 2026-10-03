@@ -1,7 +1,7 @@
 /**
  * Internationalization (i18n).
  * All visible text lives in locales/fr.json and locales/ar.json.
- * In a component:  const { t } = useTranslation();  t('nav.dashboard')
+ * In a component:  const { t } = useTranslation();  t('nav.calendar')
  * Never write French or Arabic text directly inside components.
  */
 import i18n from 'i18next'

@@ -228,25 +228,3 @@ class ReservationApiTests(APITestCase):
         self.assertEqual(len(res.data["reservations"]), 1)
         self.assertEqual(res.data["blocked"][0]["date"], "2026-10-20")
         self.assertEqual(self.client.get("/api/calendar/", {"start": "x", "end": "y"}).status_code, 400)
-
-
-class DashboardTests(APITestCase):
-    def test_figures_ignore_cancelled_reservations(self):
-        from datetime import timedelta
-
-        from django.utils import timezone
-
-        self.client.force_authenticate(get_user_model().objects.create_user("u", password="x"))
-        person = Client.objects.create(full_name="Sarah", phone="0550123456")
-        occ = Occasion.objects.create(name_fr="Mariage", name_ar="زفاف")
-        today = timezone.localdate()
-        common = dict(client=person, occasion=occ, start_time=time(19), end_time=time(23), base_price=0)
-        Reservation.objects.create(event_date=today, total=100000, paid_amount=40000, **common)
-        Reservation.objects.create(event_date=today + timedelta(days=3), total=50000, **common)
-        Reservation.objects.create(event_date=today + timedelta(days=4), total=99999, status="cancelled", **common)
-
-        data = self.client.get("/api/dashboard/").data
-        self.assertEqual((data["today"], data["upcoming"], data["count"], data["reserved_dates"]), (1, 1, 2, 2))
-        self.assertEqual((data["total"], data["paid"], data["remaining"]), (150000, 40000, 110000))
-        self.assertEqual(len(data["months"]), 12)
-        self.assertEqual([r["total"] for r in data["next"]], [100000, 50000])

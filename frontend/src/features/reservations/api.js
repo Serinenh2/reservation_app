@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 function useInvalidateAll() {
   const queryClient = useQueryClient()
   return () =>
-    ['reservations', 'calendar', 'clients', 'dashboard'].forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }))
+    ['reservations', 'calendar', 'clients'].forEach((key) => queryClient.invalidateQueries({ queryKey: [key] }))
 }
 
 export function useReservations(filters, { enabled = true } = {}) {

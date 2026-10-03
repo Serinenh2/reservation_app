@@ -50,7 +50,7 @@ one place: `STATUS_TONES` in `components/ui/Badge.jsx`.
 |---|---|---|
 | `3xl` | 38 | the "Total à payer" figure |
 | `2xl` | 30 | page titles |
-| `xl` | 24 | dashboard figures |
+| `xl` | 24 | money figures |
 | `lg` | 20 | dialog titles |
 | `md` | 17 | panel titles |
 | `base` | 15 | body text, inputs |
@@ -74,7 +74,7 @@ one place: `STATUS_TONES` in `components/ui/Badge.jsx`.
 | `Badge`, `StatusBadge` | `StatusBadge status="confirmed"` |
 | `Modal`, `ConfirmDialog` | native `<dialog>`: focus trap, Escape, backdrop |
 | `useToast()` | `toast.success()`, `toast.error()`, announced to screen readers |
-| `StatCard`, `TotalBox` | dashboard figures, the big total |
+| `StatCard`, `TotalBox` | money figures, the big total |
 | `Table` | scrolls horizontally inside its box |
 | `EmptyState`, `PageHeader`, `Spinner` | |
 
