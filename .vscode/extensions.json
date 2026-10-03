@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "batisteo.vscode-django",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-azuretools.vscode-docker",
+    "lokalise.i18n-ally"
+  ]
+}

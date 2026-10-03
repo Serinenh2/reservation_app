@@ -1,0 +1,54 @@
+@import '@fontsource-variable/manrope';
+@import '@fontsource/ibm-plex-sans-arabic/400.css';
+@import '@fontsource/ibm-plex-sans-arabic/500.css';
+@import '@fontsource/ibm-plex-sans-arabic/600.css';
+@import '@fontsource/ibm-plex-sans-arabic/700.css';
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-bg font-sans text-base text-ink;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  html[lang='ar'] body {
+    line-height: 1.7;
+  }
+  /* Amounts and times line up in columns */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-gold));
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: rgb(var(--c-gold) / 0.3);
+  }
+  dialog::backdrop {
+    background: rgb(15 12 30 / 0.55);
+    backdrop-filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

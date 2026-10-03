@@ -1,0 +1,13 @@
+.env
+node_modules/
+dist/
+__pycache__/
+.venv/
+venv/
+*.sqlite3
+*.sqlite3-*
+*.pyc
+backend/data/
+backend/staticfiles/
+backups/*
+!backups/.gitkeep

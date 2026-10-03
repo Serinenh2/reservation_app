@@ -1,0 +1,90 @@
+/*
+ * DESIGN TOKENS — the single source of truth for colors and fonts.
+ * Values are "R G B" so Tailwind can add opacity (bg-brand/10).
+ *
+ * Palette story (see DESIGN_SYSTEM.md):
+ *   Velvet  #2A2350  — karakou velvet, the brand
+ *   Fetla   #A87C28  — gold embroidery, used for details & focus
+ *   Porcelain #F6F5F9 — cool, calm working background
+ * Status colors (green/orange/red/grey) are reserved for reservation states.
+ */
+:root {
+  --font-latin: 'Manrope Variable', 'Manrope', system-ui, sans-serif;
+  --font-arabic: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --font-sans: var(--font-latin), var(--font-arabic);
+
+  --c-bg: 246 245 249;
+  --c-surface: 255 255 255;
+  --c-sunken: 240 238 245;
+  --c-line: 226 223 234;
+  --c-ink: 28 26 43;
+  --c-muted: 88 84 108;
+  --c-subtle: 128 124 146;
+  --c-shadow: 28 22 64;
+
+  --c-brand: 42 35 80;
+  --c-brand-hover: 58 49 108;
+  --c-brand-fg: 255 255 255;
+  --c-brand-soft: 233 230 246;
+
+  --c-gold: 168 124 40;
+  --c-gold-ink: 122 88 22;
+  --c-gold-soft: 248 240 222;
+
+  --c-success: 21 128 82;
+  --c-success-soft: 224 243 233;
+  --c-warning: 196 98 6;
+  --c-warning-soft: 253 237 218;
+  --c-danger: 190 44 52;
+  --c-danger-soft: 251 227 228;
+  --c-neutral: 110 106 126;
+  --c-neutral-soft: 236 235 241;
+
+  --c-sidebar: 31 26 61;
+  --c-sidebar-ink: 240 237 252;
+  --c-sidebar-muted: 168 160 204;
+  --c-sidebar-active: 255 255 255;
+
+  color-scheme: light;
+}
+
+.dark {
+  --c-bg: 15 13 28;
+  --c-surface: 24 21 42;
+  --c-sunken: 19 17 34;
+  --c-line: 46 42 72;
+  --c-ink: 236 234 245;
+  --c-muted: 172 168 192;
+  --c-subtle: 128 124 150;
+  --c-shadow: 0 0 0;
+
+  --c-brand: 118 102 214;
+  --c-brand-hover: 134 119 228;
+  --c-brand-fg: 255 255 255;
+  --c-brand-soft: 40 34 74;
+
+  --c-gold: 214 174 94;
+  --c-gold-ink: 228 192 120;
+  --c-gold-soft: 52 42 24;
+
+  --c-success: 74 196 138;
+  --c-success-soft: 20 52 40;
+  --c-warning: 242 160 72;
+  --c-warning-soft: 60 40 18;
+  --c-danger: 242 112 118;
+  --c-danger-soft: 62 24 30;
+  --c-neutral: 160 156 180;
+  --c-neutral-soft: 38 36 58;
+
+  --c-sidebar: 12 10 24;
+  --c-sidebar-ink: 236 234 245;
+  --c-sidebar-muted: 140 134 170;
+  --c-sidebar-active: 255 255 255;
+
+  color-scheme: dark;
+}
+
+/* Arabic: Arabic font first, slightly more line height for diacritics */
+html[lang='ar'] {
+  --font-sans: var(--font-arabic), var(--font-latin);
+}

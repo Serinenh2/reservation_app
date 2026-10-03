@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "i18n-ally.localesPaths": ["frontend/src/i18n/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "fr",
+  "tailwindCSS.experimental.classRegex": [["cn\\(([^)]*)\\)", "'([^']*)'"]]
+}
