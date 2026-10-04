@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.clients.views import match_phone
 from apps.core.permissions import IsStaffOrReadOnly
 
 from . import services
@@ -67,12 +68,8 @@ class ReservationViewSet(
         params = self.request.query_params
         search = params.get("search", "").strip()
         if search:
-            digits = search.replace(" ", "")
-            qs = qs.filter(
-                Q(client__full_name__icontains=search)
-                | Q(client__phone__icontains=search)
-                | Q(client__phone__icontains=digits)
-            )
+            qs, phone = match_phone(qs, search, "client__phone", "client__phone_alt")
+            qs = qs.filter(Q(client__full_name__icontains=search) | phone)
         if params.get("status"):
             qs = qs.filter(status__in=params["status"].split(","))
         if params.get("client"):

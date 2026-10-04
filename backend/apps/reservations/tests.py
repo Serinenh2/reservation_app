@@ -230,3 +230,63 @@ class ReservationApiTests(APITestCase):
         self.assertEqual(len(res.data["reservations"]), 1)
         self.assertEqual(res.data["blocked"][0]["date"], "2026-10-20")
         self.assertEqual(self.client.get("/api/calendar/", {"start": "x", "end": "y"}).status_code, 400)
+
+
+class SearchTests(APITestCase):
+    def setUp(self):
+        from apps.reservations.search import parse_query  # noqa: F401
+
+        User = get_user_model()
+        self.staff = User.objects.create_user("admin", password="x", is_staff=True)
+        self.user = User.objects.create_user("employe", password="x")
+        self.client.force_authenticate(self.user)
+        self.sarah = Client.objects.create(full_name="Sarah Benali", phone="0550 12 34 56", id_card_number="109876543210")
+        occ = Occasion.objects.create(name_fr="Dîner", name_ar="عشاء")
+        common = dict(client=self.sarah, occasion=occ, start_time=time(19), end_time=time(23), base_price=0)
+        Reservation.objects.create(event_date=date(2026, 10, 15), total=170000, paid_amount=25000, status="confirmed", **common)
+        Reservation.objects.create(event_date=date(2026, 11, 2), total=100000, paid_amount=0, **common)
+        Reservation.objects.create(event_date=date(2026, 10, 20), total=999, status="cancelled", **common)
+        BlockedDate.objects.create(date=date(2026, 10, 21), reason="Travaux")
+
+    def search(self, q):
+        return self.client.get("/api/search/", {"q": q}).data
+
+    def test_parse_query(self):
+        from apps.reservations.search import parse_query
+
+        self.assertEqual(parse_query("15/10/2026"), ("day", date(2026, 10, 15)))
+        self.assertEqual(parse_query("2026-10-15"), ("day", date(2026, 10, 15)))
+        self.assertEqual(parse_query("15.10.26"), ("day", date(2026, 10, 15)))
+        self.assertEqual(parse_query("10/2026"), ("month", (2026, 10)))
+        self.assertEqual(parse_query("31/02/2026"), ("text", "31/02/2026"))
+        self.assertEqual(parse_query("sarah")[0], "text")
+
+    def test_date_gives_reservation_with_client_details(self):
+        data = self.search("15/10/2026")
+        self.assertEqual(data["kind"], "day")
+        self.assertEqual(len(data["reservations"]), 1)
+        client = data["clients"][self.sarah.id]
+        self.assertEqual(client["id_card_number"], "109876543210")
+        self.assertEqual(data["totals"]["remaining"], 145000)
+
+    def test_blocked_day_and_month(self):
+        self.assertEqual(self.search("21/10/2026")["blocked"][0]["reason"], "Travaux")
+        month = self.search("10/2026")
+        self.assertEqual(len(month["reservations"]), 2)  # cancelled one listed...
+        self.assertEqual(month["totals"]["total"], 170000)  # ...but not counted
+
+    def test_client_by_name_phone_or_id_card(self):
+        for q in ("sarah", "0550 12", "0550123456", "10987654"):
+            data = self.search(q)
+            self.assertEqual([c["client"]["full_name"] for c in data["clients"]], ["Sarah Benali"], q)
+        result = self.search("benali")["clients"][0]
+        self.assertEqual(len(result["reservations"]), 3)
+        self.assertEqual((result["totals"]["total"], result["totals"]["paid"], result["totals"]["remaining"]), (270000, 25000, 245000))
+
+    def test_workers_only_for_staff(self):
+        from apps.staff.models import Employee
+
+        Employee.objects.create(last_name="Haddad", first_name="Yacine", hire_date=date(2024, 1, 1))
+        self.assertEqual(self.search("haddad")["employees"], [])
+        self.client.force_authenticate(self.staff)
+        self.assertEqual(len(self.search("haddad")["employees"]), 1)

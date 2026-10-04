@@ -17,7 +17,8 @@
     "closeMenu": "Fermer le menu",
     "eventTypes": "Types d'occasion",
     "employees": "Employés",
-    "documents": "Documents"
+    "documents": "Documents",
+    "search": "Recherche"
   },
   "common": {
     "save": "Enregistrer",
@@ -476,5 +477,24 @@
     "engagement": "Engagement (تعهد)",
     "engagementHint": "Rempli avec la réservation et la fiche du client.",
     "missingInfo": "À compléter pour un document complet : {{fields}}. Sinon une ligne pointillée sera laissée pour l'écrire à la main."
+  },
+  "search": {
+    "title": "Recherche",
+    "subtitle": "Une date, un mois, un nom, un téléphone ou un numéro de carte : tout se cherche ici.",
+    "placeholder": "Ex. 15/10/2026, 10/2026, Benali, 0550 12 34 56…",
+    "examples": "Exemples :",
+    "start": "Que cherchez-vous ?",
+    "startText": "Tapez une date pour voir qui l'a réservée, ou un client pour voir ses réservations et ce qu'il reste à payer.",
+    "free": "Libre",
+    "freeTitle": "Aucune réservation ce jour-là",
+    "freeText": "Cette date est libre.",
+    "blockedText": "Aucune réservation possible ce jour-là.",
+    "booked_one": "{{count}} réservation",
+    "booked_other": "{{count}} réservations",
+    "monthReservations_one": "{{count}} réservation",
+    "monthReservations_other": "{{count}} réservations",
+    "noReservations": "Aucune réservation ce mois-ci.",
+    "nothing": "Aucun résultat",
+    "nothingText": "Essayez un autre nom, numéro ou une date comme 15/10/2026."
   }
 }

@@ -18,6 +18,7 @@ class ClientApiTests(APITestCase):
         names = lambda q: [c["full_name"] for c in self.client.get("/api/clients/", {"search": q}).data["results"]]  # noqa: E731
         self.assertEqual(names("sarah"), ["Sarah Benali"])
         self.assertEqual(names("0661 98"), ["Yacine Haddad"])
+        self.assertEqual(names("0550123456"), ["Sarah Benali"])  # saved with spaces, typed without
 
     def test_invalid_phone_rejected(self):
         res = self.client.post("/api/clients/", {"full_name": "X", "phone": "abc"})

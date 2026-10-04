@@ -9,6 +9,7 @@ import ClientDetailPage from '@/features/clients/ClientDetailPage'
 import EmployeesPage from '@/features/employees/EmployeesPage'
 import EmployeeDetailPage from '@/features/employees/EmployeeDetailPage'
 import DocumentsPage from '@/features/documents/DocumentsPage'
+import SearchPage from '@/features/search/SearchPage'
 import CatalogPage from '@/features/catalog/CatalogPage'
 import ReservationsPage from '@/features/reservations/ReservationsPage'
 import ReservationFormPage from '@/features/reservations/ReservationFormPage'
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="employees" element={<EmployeesPage />} />
             <Route path="employees/:id" element={<EmployeeDetailPage />} />
             <Route path="documents" element={<DocumentsPage />} />
+            <Route path="search" element={<SearchPage />} />
             <Route path="admin/event-types" element={<CatalogPage key="event-types" kind="event-types" />} />
             <Route path="admin/occasions" element={<CatalogPage key="occasions" kind="occasions" />} />
             <Route path="admin/services" element={<CatalogPage key="services" kind="services" />} />

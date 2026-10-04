@@ -72,7 +72,7 @@ function ReservationSearch({ onPick }) {
   return (
     <div className="space-y-3">
       <div className="relative">
-        <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" aria-hidden />
+        <Search className="pointer-events-none absolute z-10 start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" aria-hidden />
         <Input type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t('clients.searchPlaceholder')} aria-label={t('common.search')} className="ps-9" />
         {isFetching && <Spinner className="absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" />}
       </div>

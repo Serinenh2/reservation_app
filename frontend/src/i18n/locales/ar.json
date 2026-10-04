@@ -17,7 +17,8 @@
     "closeMenu": "إغلاق القائمة",
     "eventTypes": "المناسبات",
     "employees": "العمال",
-    "documents": "الوثائق"
+    "documents": "الوثائق",
+    "search": "البحث"
   },
   "common": {
     "save": "حفظ",
@@ -538,5 +539,32 @@
     "engagement": "تعهد و إلتزام",
     "engagementHint": "تُملأ من الحجز وبطاقة الزبون.",
     "missingInfo": "معلومات ناقصة: {{fields}}. سيُترك سطر منقط لكتابتها باليد."
+  },
+  "search": {
+    "title": "البحث",
+    "subtitle": "تاريخ، شهر، اسم، هاتف أو رقم بطاقة: ابحث عن كل شيء هنا.",
+    "placeholder": "مثال: 15/10/2026، 10/2026، بن علي، 0550 12 34 56…",
+    "examples": "أمثلة:",
+    "start": "عمّ تبحث؟",
+    "startText": "اكتب تاريخاً لمعرفة من حجزه، أو اسم زبون لرؤية حجوزاته والمبلغ الباقي.",
+    "free": "متاح",
+    "freeTitle": "لا توجد حجوزات في هذا اليوم",
+    "freeText": "هذا التاريخ متاح.",
+    "blockedText": "لا يمكن الحجز في هذا اليوم.",
+    "booked_zero": "لا حجوزات",
+    "booked_one": "حجز واحد",
+    "booked_two": "حجزان",
+    "booked_few": "{{count}} حجوزات",
+    "booked_many": "{{count}} حجزاً",
+    "booked_other": "{{count}} حجز",
+    "monthReservations_zero": "لا حجوزات",
+    "monthReservations_one": "حجز واحد",
+    "monthReservations_two": "حجزان",
+    "monthReservations_few": "{{count}} حجوزات",
+    "monthReservations_many": "{{count}} حجزاً",
+    "monthReservations_other": "{{count}} حجز",
+    "noReservations": "لا توجد حجوزات هذا الشهر.",
+    "nothing": "لا توجد نتائج",
+    "nothingText": "جرّب اسماً أو رقماً آخر أو تاريخاً مثل 15/10/2026."
   }
 }

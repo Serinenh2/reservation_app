@@ -79,6 +79,7 @@ tested without HTTP.
 | DELETE | `/api/reservations/<id>/payments/<payment_id>/` | staff |
 | GET / POST / DELETE | `/api/blocked-dates/` (`?upcoming=1`) | read: logged in, write: staff |
 | GET | `/api/calendar/?start=&end=` (max 62 days) | logged in |
+| GET | `/api/search/?q=` a day (15/10/2026), a month (10/2026), or text (name, phone, email, ID card; workers for staff) | logged in |
 | GET / POST | `/api/employees/` (`?status=current\|former &month=YYYY-MM`), multipart | staff |
 | GET / PATCH / DELETE | `/api/employees/<id>/` | staff |
 | GET / DELETE | `/api/employees/<id>/photo/`, `/id-document/` (the private file) | staff |
@@ -119,6 +120,7 @@ frontend/src/
   features/reservations/ list, form, detail + payments, pricing preview
   features/calendar/     month view, blocked dates
   features/employees/    list, detail (absences by month), form with uploads
+  features/search/       one-box search: day, month, client (with money totals), worker
   features/documents/    receipt (A5) + commitment "تعهد و إلتزام" (A4): preview, PDF (browser rendering), Word (docx)
 ```
 
