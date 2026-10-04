@@ -6,8 +6,9 @@ import { formatDate, formatMoney } from '@/lib/format'
 import { Button, Card, EmptyState, FullPageSpinner, PageHeader, Pagination, StatCard } from '@/components/ui'
 import ReservationTable from '@/features/reservations/ReservationTable'
 import { useReservations } from '@/features/reservations/api'
+import IdDocumentCard from '@/components/IdDocumentCard'
 import ClientFormModal from './ClientFormModal'
-import { useClient } from './api'
+import { useClient, useDeleteClientDocument } from './api'
 
 /** Contact details + every reservation of this client (history). */
 export default function ClientDetailPage() {
@@ -17,6 +18,7 @@ export default function ClientDetailPage() {
   const [page, setPage] = useState(1)
   const [editing, setEditing] = useState(false)
   const { data: client, isLoading, isError } = useClient(id)
+  const removeDocument = useDeleteClientDocument(id)
   const { data: history } = useReservations({ client: id, page }, { enabled: Boolean(client) })
 
   if (isLoading) return <FullPageSpinner />
@@ -39,7 +41,8 @@ export default function ClientDetailPage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="self-start">
+        <div className="space-y-6 self-start">
+        <Card>
           <Card.Header title={t('clients.contact')} />
           <ul className="space-y-3 p-5">
             <Contact icon={Phone}><span dir="ltr" className="tabular">{client.phone}</span></Contact>
@@ -59,6 +62,15 @@ export default function ClientDetailPage() {
           </ul>
           {client.notes && <p className="whitespace-pre-line border-t border-line px-5 py-4 text-base text-muted">{client.notes}</p>}
         </Card>
+        <IdDocumentCard
+          path={`/clients/${client.id}/id-document/`}
+          type={client.id_document_type}
+          version={client.updated_at}
+          onUpload={() => setEditing(true)}
+          onRemove={() => removeDocument.mutateAsync()}
+          removing={removeDocument.isPending}
+        />
+        </div>
 
         <div className="space-y-6 lg:col-span-2">
           <div className="grid gap-3 sm:grid-cols-3">

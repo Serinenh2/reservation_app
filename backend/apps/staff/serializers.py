@@ -1,32 +1,8 @@
-from pathlib import Path
-
 from rest_framework import serializers
 
+from apps.core.files import DOCUMENT_TYPES, IMAGE_TYPES, check_file, document_type
+
 from .models import Absence, Employee
-
-MB = 1024 * 1024
-
-# Check the real content (first bytes), not only the extension.
-SIGNATURES = {
-    ".jpg": [b"\xff\xd8\xff"],
-    ".jpeg": [b"\xff\xd8\xff"],
-    ".png": [b"\x89PNG\r\n\x1a\n"],
-    ".webp": [b"RIFF"],
-    ".pdf": [b"%PDF"],
-}
-
-
-def _check_file(file, allowed, max_mb):
-    ext = Path(file.name).suffix.lower()
-    if ext not in allowed:
-        raise serializers.ValidationError("file_type")
-    if file.size > max_mb * MB:
-        raise serializers.ValidationError("file_too_big")
-    head = file.read(16)
-    file.seek(0)
-    if not any(head.startswith(sig) for sig in SIGNATURES[ext]):
-        raise serializers.ValidationError("file_type")
-    return file
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -58,7 +34,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         return bool(obj.id_document)
 
     def get_id_document_type(self, obj):
-        return "pdf" if obj.id_document and obj.id_document.name.lower().endswith(".pdf") else "image" if obj.id_document else None
+        return document_type(obj.id_document)
 
     def _clean_name(self, value):
         value = " ".join(value.split())
@@ -70,10 +46,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
     validate_first_name = _clean_name
 
     def validate_photo(self, file):
-        return _check_file(file, {".jpg", ".jpeg", ".png", ".webp"}, max_mb=5)
+        return check_file(file, IMAGE_TYPES, max_mb=5)
 
     def validate_id_document(self, file):
-        return _check_file(file, {".jpg", ".jpeg", ".png", ".webp", ".pdf"}, max_mb=10)
+        return check_file(file, DOCUMENT_TYPES, max_mb=10)
 
     def validate(self, attrs):
         hire = attrs.get("hire_date", getattr(self.instance, "hire_date", None))

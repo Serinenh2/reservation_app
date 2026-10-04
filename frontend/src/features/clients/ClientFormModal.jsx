@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FileText, Upload } from 'lucide-react'
 import { describeError, fieldError } from '@/lib/api'
 import { Button, Field, Input, Modal, Textarea, useToast } from '@/components/ui'
 import { useSaveClient } from './api'
@@ -16,12 +17,15 @@ export default function ClientFormModal({ open, onClose, client, onSaved }) {
   const save = useSaveClient()
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
+  const [idDocument, setIdDocument] = useState(null) // new File, not yet uploaded
+  const docInput = useRef(null)
 
   // Reset only when the dialog opens (the `client` prop may be a new object on every render).
   useEffect(() => {
     if (open) {
       setForm(client ? { ...EMPTY, ...client, id_card_issued_on: client.id_card_issued_on || '' } : EMPTY)
       setErrors({})
+      setIdDocument(null)
     }
   }, [open]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -32,11 +36,12 @@ export default function ClientFormModal({ open, onClose, client, onSaved }) {
     const missing = {}
     if (!form.full_name.trim()) missing.full_name = ['required']
     if (!form.phone.trim()) missing.phone = ['required']
+    if (idDocument && idDocument.size > 10 * 1024 * 1024) missing.id_document = ['file_too_big']
     if (Object.keys(missing).length) return setErrors(missing)
 
     const { id, full_name, phone, phone_alt, email, address, id_card_number, id_card_issued_on, id_card_issued_at, notes } = form
     save.mutate(
-      { id, full_name, phone, phone_alt, email, address, id_card_number, id_card_issued_on: id_card_issued_on || null, id_card_issued_at, notes },
+      { id, full_name, phone, phone_alt, email, address, id_card_number, id_card_issued_on: id_card_issued_on || null, id_card_issued_at, notes, ...(idDocument && { id_document: idDocument }) },
       {
         onSuccess: (saved) => {
           toast.success(t('clients.saved'))
@@ -94,6 +99,21 @@ export default function ClientFormModal({ open, onClose, client, onSaved }) {
           <Field label={t('clients.idCardIssuedAt')}>
             <Input value={form.id_card_issued_at} onChange={set('id_card_issued_at')} />
           </Field>
+          <div className="flex flex-col gap-1.5 sm:col-span-3">
+            <input ref={docInput} type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="sr-only" onChange={(e) => setIdDocument(e.target.files[0] || null)} />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button size="sm" variant="secondary" icon={Upload} onClick={() => docInput.current.click()}>
+                {client?.has_id_document || idDocument ? t('employees.replaceDocument') : t('employees.uploadDocument')}
+              </Button>
+              {idDocument ? (
+                <span className="flex min-w-0 items-center gap-1.5 text-sm text-muted"><FileText className="h-4 w-4 shrink-0" aria-hidden /><span className="truncate">{idDocument.name}</span></span>
+              ) : client?.has_id_document ? (
+                <span className="text-sm text-muted">{t('employees.documentOnFile')}</span>
+              ) : null}
+            </div>
+            <p className="text-sm text-muted">{t('clients.idDocumentHint')}</p>
+            {err('id_document') && <p className="text-sm font-medium text-danger" role="alert">{err('id_document')}</p>}
+          </div>
         </fieldset>
         <Field label={t('clients.notes')} optional className="sm:col-span-2">
           <Textarea value={form.notes} onChange={set('notes')} />

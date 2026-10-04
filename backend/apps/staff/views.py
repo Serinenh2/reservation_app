@@ -1,8 +1,6 @@
-import mimetypes
 from datetime import date
 
 from django.db.models import Count, Q
-from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status, viewsets
@@ -11,6 +9,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+
+from apps.core.files import private_file_response
 
 from .models import Employee
 from .serializers import AbsenceSerializer, EmployeeSerializer
@@ -65,12 +65,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
             if file:
                 file.delete(save=True)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        if not file:
-            raise Http404
-        content_type = mimetypes.guess_type(file.name)[0] or "application/octet-stream"
-        response = FileResponse(file.open("rb"), content_type=content_type)
-        response["Cache-Control"] = "private, no-store"
-        return response
+        return private_file_response(file)
 
     @action(detail=True, methods=["get", "delete"])
     def photo(self, request, pk=None):

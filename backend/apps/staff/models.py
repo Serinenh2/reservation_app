@@ -1,24 +1,18 @@
-import uuid
 from decimal import Decimal
-from pathlib import Path
 
 from django.core.validators import MinValueValidator
 from django.db import models
 
-
-def _file_path(instance, filename, kind):
-    """employees/<id>/<kind>-<random>.<ext>: unguessable names, never the user's file name."""
-    ext = Path(filename).suffix.lower()
-    return f"employees/{instance.pk or 'new'}/{kind}-{uuid.uuid4().hex}{ext}"
+from apps.core.files import random_file_name
 
 
 # Plain module functions (migrations can't store closures).
 def photo_path(instance, filename):
-    return _file_path(instance, filename, "photo")
+    return random_file_name(f"employees/{instance.pk or 'new'}", "photo", filename)
 
 
 def id_document_path(instance, filename):
-    return _file_path(instance, filename, "id")
+    return random_file_name(f"employees/{instance.pk or 'new'}", "id", filename)
 
 
 class Employee(models.Model):

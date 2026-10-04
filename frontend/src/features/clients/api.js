@@ -21,8 +21,15 @@ export function useClient(id) {
 export function useSaveClient() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, ...data }) =>
-      (id ? api.patch(`/clients/${id}/`, data) : api.post('/clients/', data)).then((r) => r.data),
+    mutationFn: ({ id, ...data }) => {
+      // With an ID document file the form is sent as multipart, otherwise as JSON.
+      let body = data
+      if (data.id_document instanceof File) {
+        body = new FormData()
+        Object.entries(data).forEach(([key, value]) => body.append(key, value ?? ''))
+      }
+      return (id ? api.patch(`/clients/${id}/`, body) : api.post('/clients/', body)).then((r) => r.data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] })
       queryClient.invalidateQueries({ queryKey: ['reservations'] }) // names shown in lists
@@ -34,6 +41,14 @@ export function useDeleteClient() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id) => api.delete(`/clients/${id}/`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['clients'] }),
+  })
+}
+
+export function useDeleteClientDocument(id) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => api.delete(`/clients/${id}/id-document/`),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['clients'] }),
   })
 }

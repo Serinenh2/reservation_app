@@ -1,5 +1,4 @@
 /** Server data for employees and their absences (administrators only). */
-import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 
@@ -75,32 +74,5 @@ export function useDeleteAbsence(id) {
   })
 }
 
-/**
- * Private files need the login token, so <img src="/api/..."> can't load them.
- * This downloads the file with the token and returns a temporary local URL.
- * `version` (e.g. updated_at) reloads it after a change.
- */
-export function useAuthedFile(path, version) {
-  const [url, setUrl] = useState(null)
-  useEffect(() => {
-    if (!path) {
-      setUrl(null)
-      return undefined
-    }
-    let objectUrl
-    let cancelled = false
-    api
-      .get(path, { responseType: 'blob' })
-      .then((r) => {
-        if (cancelled) return
-        objectUrl = URL.createObjectURL(r.data)
-        setUrl(objectUrl)
-      })
-      .catch(() => !cancelled && setUrl(null))
-    return () => {
-      cancelled = true
-      if (objectUrl) URL.revokeObjectURL(objectUrl)
-    }
-  }, [path, version])
-  return url
-}
+// Moved to lib so clients can use it too.
+export { useAuthedFile } from '@/lib/useAuthedFile'

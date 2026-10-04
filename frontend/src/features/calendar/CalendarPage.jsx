@@ -13,12 +13,27 @@ const WEEK_START = 6
 
 /** Chip colors per status tone. Status -> tone comes from STATUS_TONES (one place). */
 const CHIP = {
-  success: 'border-success/30 bg-success-soft text-success',
-  warning: 'border-warning/30 bg-warning-soft text-warning',
-  danger: 'border-danger/30 bg-danger-soft text-danger',
-  neutral: 'border-line bg-neutral-soft text-neutral line-through decoration-1',
+  // White chips so they stand out on the colored cell.
+  success: 'border-success/40 bg-surface text-success',
+  warning: 'border-warning/40 bg-surface text-warning',
+  danger: 'border-danger/40 bg-surface text-danger',
+  neutral: 'border-line bg-surface text-neutral line-through decoration-1',
 }
 const DOT = { success: 'bg-success', warning: 'bg-warning', danger: 'bg-danger', neutral: 'bg-neutral' }
+
+/** Whole-cell background: the day takes the color of its reservations. */
+const CELL = { success: 'bg-success-soft', warning: 'bg-warning-soft', danger: 'bg-danger-soft', neutral: 'bg-neutral-soft' }
+
+/**
+ * One status for the whole day when it has several reservations:
+ * confirmed first, then pending; cancelled only if everything is cancelled.
+ */
+function dayStatus(reservations) {
+  for (const status of ['confirmed', 'pending', 'cancelled']) {
+    if (reservations.some((r) => r.status === status)) return status
+  }
+  return null
+}
 
 /** The 5 or 6 weeks shown for a month, as Date objects. */
 function monthGrid(year, month) {
@@ -140,14 +155,15 @@ function DayCell({ iso, day, inMonth, isToday, isSelected, isPast, reservations,
   const visible = reservations.slice(0, 3)
   const more = reservations.length - visible.length
   const active = reservations.filter((r) => r.status !== 'cancelled').length
+  const status = blocked ? 'blocked' : dayStatus(reservations)
   const canBook = !blocked && !isPast
 
   return (
     <div
       className={cn(
         'group relative min-h-[5.5rem] border-b border-e border-line p-1 text-start transition-colors md:min-h-[8.5rem] md:p-1.5 [&:nth-child(7n)]:border-e-0',
-        !inMonth && 'bg-sunken/40',
-        blocked && 'bg-danger-soft/70',
+        status ? CELL[STATUS_TONES[status]] : !inMonth && 'bg-sunken/40',
+        status && !inMonth && 'opacity-60',
         isSelected && 'ring-2 ring-inset ring-gold',
       )}
     >

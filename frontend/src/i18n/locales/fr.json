@@ -192,7 +192,8 @@
     "idCardNumber": "Numéro de la carte",
     "idCardIssuedOn": "Délivrée le",
     "idCardIssuedAt": "Délivrée à",
-    "idCardIssued": "Délivrée le {{date}} à {{place}}"
+    "idCardIssued": "Délivrée le {{date}} à {{place}}",
+    "idDocumentHint": "Photo ou PDF de la carte, 10 Mo maximum."
   },
   "catalog": {
     "name": "Nom",
@@ -405,7 +406,7 @@
     "hireDate": "Date d'embauche",
     "endDate": "Date de départ",
     "endDateHint": "À remplir seulement s'il a quitté l'entreprise.",
-    "salary": "Salaire mensuel",
+    "salary": "Versement",
     "seniority": "Ancienneté",
     "years_one": "{{count}} an",
     "years_other": "{{count}} ans",

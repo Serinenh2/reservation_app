@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
-  CalendarCheck, CalendarX, ChevronLeft, ChevronRight, Clock, ExternalLink, FileText, Pencil, Phone, Plus, Trash2, UserRound, Wallet,
+  CalendarCheck, CalendarX, ChevronLeft, ChevronRight, Clock, Pencil, Phone, Plus, Trash2, UserRound, Wallet,
 } from 'lucide-react'
 import { describeError, fieldError } from '@/lib/api'
 import { formatDate, formatMoney, formatNumber, toISODate } from '@/lib/format'
@@ -10,8 +10,9 @@ import { LANGUAGES } from '@/i18n'
 import {
   Badge, Button, Card, ConfirmDialog, EmptyState, Field, FullPageSpinner, Input, Modal, PageHeader, Select, useToast,
 } from '@/components/ui'
+import IdDocumentCard from '@/components/IdDocumentCard'
 import EmployeeFormModal from './EmployeeFormModal'
-import { useAbsences, useAddAbsence, useAuthedFile, useDeleteAbsence, useDeleteEmployee, useDeleteEmployeeFile, useEmployee } from './api'
+import { useAbsences, useAddAbsence, useDeleteAbsence, useDeleteEmployee, useDeleteEmployeeFile, useEmployee } from './api'
 import { EmployeeAvatar, isCurrent, useSeniorityText } from './shared'
 
 const KINDS = ['unjustified', 'justified', 'sick', 'leave']
@@ -25,6 +26,7 @@ export default function EmployeeDetailPage() {
   const seniorityText = useSeniorityText()
   const { data: e, isLoading, isError } = useEmployee(id)
   const remove = useDeleteEmployee()
+  const removeFile = useDeleteEmployeeFile(id)
   const [editing, setEditing] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
@@ -70,7 +72,14 @@ export default function EmployeeDetailPage() {
             </dl>
             {e.notes && <p className="whitespace-pre-line border-t border-line px-5 py-4 text-base text-muted">{e.notes}</p>}
           </Card>
-          <IdDocumentCard employee={e} onUpload={() => setEditing(true)} />
+          <IdDocumentCard
+            path={`/employees/${e.id}/id-document/`}
+            type={e.id_document_type}
+            version={e.updated_at}
+            onUpload={() => setEditing(true)}
+            onRemove={() => removeFile.mutateAsync('id-document')}
+            removing={removeFile.isPending}
+          />
         </div>
 
         <div className="lg:col-span-2">
@@ -113,59 +122,6 @@ function Info({ icon: Icon, label, children }) {
         <dd className="mt-0.5 font-medium">{children}</dd>
       </div>
     </div>
-  )
-}
-
-/** The ID document: image preview or PDF, opened from a private local link. */
-function IdDocumentCard({ employee: e, onUpload }) {
-  const { t } = useTranslation()
-  const toast = useToast()
-  const removeFile = useDeleteEmployeeFile(e.id)
-  const [confirming, setConfirming] = useState(false)
-  const url = useAuthedFile(e.has_id_document ? `/employees/${e.id}/id-document/` : null, e.updated_at)
-
-  return (
-    <Card>
-      <Card.Header
-        title={t('employees.idDocument')}
-        actions={e.has_id_document && <Button size="sm" variant="ghost" icon={Trash2} aria-label={t('employees.removeDocument')} onClick={() => setConfirming(true)} />}
-      />
-      <div className="p-5">
-        {!e.has_id_document ? (
-          <div className="text-center">
-            <p className="text-base text-muted">{t('employees.noDocument')}</p>
-            <Button size="sm" variant="secondary" className="mt-3" onClick={onUpload}>{t('employees.uploadDocument')}</Button>
-          </div>
-        ) : !url ? (
-          <div className="h-32 animate-pulse rounded-control bg-sunken" />
-        ) : e.id_document_type === 'pdf' ? (
-          <a href={url} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-control border border-line p-3 hover:bg-sunken/60">
-            <FileText className="h-8 w-8 text-danger" aria-hidden />
-            <span className="flex-1 font-medium">{t('employees.openPdf')}</span>
-            <ExternalLink className="h-4 w-4 text-subtle" aria-hidden />
-          </a>
-        ) : (
-          <a href={url} target="_blank" rel="noreferrer" title={t('employees.openFull')}>
-            <img src={url} alt={t('employees.idDocument')} className="max-h-64 w-full rounded-control border border-line object-contain" />
-          </a>
-        )}
-      </div>
-      <ConfirmDialog
-        open={confirming}
-        onClose={() => setConfirming(false)}
-        loading={removeFile.isPending}
-        onConfirm={() =>
-          removeFile.mutate('id-document', {
-            onSuccess: () => toast.success(t('employees.documentRemoved')),
-            onSettled: () => setConfirming(false),
-          })
-        }
-        title={t('employees.removeDocumentTitle')}
-        description={t('employees.removeDocumentText')}
-        confirmLabel={t('employees.removeDocument')}
-        cancelLabel={t('employees.keepDocument')}
-      />
-    </Card>
   )
 }
 
