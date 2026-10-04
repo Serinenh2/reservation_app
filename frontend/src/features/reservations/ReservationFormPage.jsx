@@ -21,6 +21,7 @@ const EMPTY = {
   end_time: '01:00',
   guests_women: '',
   guests_men: '',
+  guests_children: '',
   base_price: '',
   discount_type: 'none',
   discount_value: '',
@@ -57,6 +58,7 @@ function ReservationForm({ existing }) {
           end_time: existing.end_time.slice(0, 5),
           guests_women: existing.guests_women || '',
           guests_men: existing.guests_men || '',
+          guests_children: existing.guests_children || '',
           base_price: existing.base_price,
           discount_type: existing.discount_type,
           discount_value: existing.discount_value || '',
@@ -133,6 +135,7 @@ function ReservationForm({ existing }) {
     if (form.base_price === '' || Number(form.base_price) < 0) e.base_price = ['min_value']
     if (Number(form.guests_women) < 0) e.guests_women = ['min_value']
     if (Number(form.guests_men) < 0) e.guests_men = ['min_value']
+    if (Number(form.guests_children) < 0) e.guests_children = ['min_value']
     if (totals.discountTooHigh) e.discount_value = ['discount_too_high']
     else if (totals.total < paid) e.discount_value = ['total_below_paid']
     return e
@@ -156,6 +159,7 @@ function ReservationForm({ existing }) {
       end_time: form.end_time,
       guests_women: Number(form.guests_women) || 0,
       guests_men: Number(form.guests_men) || 0,
+      guests_children: Number(form.guests_children) || 0,
       base_price: Number(form.base_price),
       discount_type: form.discount_type,
       discount_value: form.discount_type === 'none' ? 0 : Number(form.discount_value) || 0,
@@ -230,14 +234,21 @@ function ReservationForm({ existing }) {
                   ))}
                 </Select>
               </Field>
-              <Field label={t('reservations.guestsWomen')} optional error={err('guests_women')}>
-                <Input type="number" min="0" step="10" {...bind('guests_women')} />
-              </Field>
-              <Field label={t('reservations.guestsMen')} optional error={err('guests_men')}>
-                <Input type="number" min="0" step="10" {...bind('guests_men')} />
-              </Field>
+              <div className="grid grid-cols-3 gap-3 sm:col-span-2">
+                <Field label={t('reservations.guestsWomen')} optional error={err('guests_women')}>
+                  <Input type="number" min="0" step="10" {...bind('guests_women')} />
+                </Field>
+                <Field label={t('reservations.guestsMen')} optional error={err('guests_men')}>
+                  <Input type="number" min="0" step="10" {...bind('guests_men')} />
+                </Field>
+                <Field label={t('reservations.guestsChildren')} optional error={err('guests_children')}>
+                  <Input type="number" min="0" step="5" {...bind('guests_children')} />
+                </Field>
+              </div>
               <p className="-mt-2 text-sm text-muted sm:col-span-2">
                 {t('reservations.guestsTotal')} : <span className="tabular font-semibold text-ink">{formatNumber(totalGuests)}</span>
+                {Number(form.guests_children) > 0 && <> · {t('reservations.childrenCount', { count: Number(form.guests_children) })}</>}
+                <span className="block text-subtle">{t('reservations.childrenNotInTotal')}</span>
               </p>
               <Field label={t('reservations.date')} error={err('event_date')} className="sm:col-span-2">
                 <Input type="date" {...bind('event_date')} />

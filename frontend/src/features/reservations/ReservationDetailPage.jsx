@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
-import { Ban, CalendarDays, Clock, Moon, Pencil, Phone, Plus, RotateCcw, Trash2, Users, Wallet } from 'lucide-react'
+import { Ban, CalendarDays, Clock, FileText, Moon, Pencil, Phone, Plus, RotateCcw, Trash2, Users, Wallet } from 'lucide-react'
 import { api, describeError, fieldError } from '@/lib/api'
 import { eventLabel, formatDate, formatMoney, formatNumber, formatTime, localName, toISODate } from '@/lib/format'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -86,6 +86,7 @@ export default function ReservationDetailPage() {
           ) : (
             <>
               {deleteButton}
+              <Button variant="secondary" icon={FileText} onClick={() => navigate(`/documents?reservation=${r.id}`)}>{t('nav.documents')}</Button>
               <Button variant="secondary" icon={Ban} onClick={() => setConfirming(true)}>{t('reservations.cancel')}</Button>
               <Button icon={Pencil} onClick={() => navigate(`/reservations/${r.id}/edit`)}>{t('common.edit')}</Button>
             </>
@@ -123,7 +124,8 @@ export default function ReservationDetailPage() {
                   <>
                     {formatNumber(r.guests)}
                     <span className="ms-2 text-sm font-normal text-muted">
-                      ({t('reservations.womenCount', { count: r.guests_women })} · {t('reservations.menCount', { count: r.guests_men })})
+                      ({t('reservations.womenCount', { count: r.guests_women })} · {t('reservations.menCount', { count: r.guests_men })}
+                      {r.guests_children > 0 && <> · {t('reservations.childrenCount', { count: r.guests_children })}</>})
                     </span>
                   </>
                 ) : '—'}

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "apps.clients",
     "apps.catalog",
     "apps.reservations",
+    "apps.staff",
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,13 @@ TEMPLATES = [
 DATA_DIR = Path(env("DATA_DIR", str(BASE_DIR / "data")))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 BACKUP_DIR = Path(env("BACKUP_DIR", str(BASE_DIR / "backups")))
+
+# Uploaded files (employee photos, ID documents). Kept next to the database
+# so the same Docker volume keeps them. There is NO public URL for them:
+# they are only served through the API to administrators.
+MEDIA_ROOT = DATA_DIR / "media"
+# Uploads up to 10 MB (an ID document scan); bigger files are refused.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 
 DATABASES = {
     "default": {

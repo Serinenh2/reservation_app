@@ -6,6 +6,9 @@ import SettingsPage from '@/pages/SettingsPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import ClientsPage from '@/features/clients/ClientsPage'
 import ClientDetailPage from '@/features/clients/ClientDetailPage'
+import EmployeesPage from '@/features/employees/EmployeesPage'
+import EmployeeDetailPage from '@/features/employees/EmployeeDetailPage'
+import DocumentsPage from '@/features/documents/DocumentsPage'
 import CatalogPage from '@/features/catalog/CatalogPage'
 import ReservationsPage from '@/features/reservations/ReservationsPage'
 import ReservationFormPage from '@/features/reservations/ReservationFormPage'
@@ -29,6 +32,9 @@ export default function App() {
             <Route path="reservations/:id/edit" element={<ReservationFormPage />} />
             <Route path="clients" element={<ClientsPage />} />
             <Route path="clients/:id" element={<ClientDetailPage />} />
+            <Route path="employees" element={<EmployeesPage />} />
+            <Route path="employees/:id" element={<EmployeeDetailPage />} />
+            <Route path="documents" element={<DocumentsPage />} />
             <Route path="admin/event-types" element={<CatalogPage key="event-types" kind="event-types" />} />
             <Route path="admin/occasions" element={<CatalogPage key="occasions" kind="occasions" />} />
             <Route path="admin/services" element={<CatalogPage key="services" kind="services" />} />

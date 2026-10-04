@@ -75,7 +75,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = [
             "id", "client", "event_type", "event_type_fr", "event_type_ar", "occasion", "occasion_fr", "occasion_ar",
-            "event_date", "start_time", "end_time", "guests_women", "guests_men", "guests",
+            "event_date", "start_time", "end_time", "guests_women", "guests_men", "guests_children", "guests",
             "total", "paid_amount", "remaining_amount", "payment_state", "status",
         ]
 

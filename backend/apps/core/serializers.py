@@ -8,6 +8,7 @@ class AppSettingsSerializer(serializers.ModelSerializer):
         model = AppSettings
         fields = [
             "company_name",
+            "company_name_ar",
             "company_phone",
             "company_email",
             "company_address",

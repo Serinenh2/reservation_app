@@ -1,8 +1,9 @@
-import { CalendarDays, ClipboardList, Users, Heart, PartyPopper, Sparkles, Ban, Settings } from 'lucide-react'
+import { CalendarDays, ClipboardList, Users, IdCard, FileText, Heart, PartyPopper, Sparkles, Ban, Settings } from 'lucide-react'
 
 /**
  * The sidebar menu. To add a page: add a line here + a route in App.jsx.
  * `phase: N` marks a page not built yet (shown with a small "PN" tag).
+ * `staffOnly` hides the entry from non-administrator accounts.
  */
 export const NAV_SECTIONS = [
   {
@@ -10,6 +11,8 @@ export const NAV_SECTIONS = [
       { to: '/calendar', label: 'nav.calendar', icon: CalendarDays },
       { to: '/reservations', label: 'nav.reservations', icon: ClipboardList },
       { to: '/clients', label: 'nav.clients', icon: Users },
+      { to: '/employees', label: 'nav.employees', icon: IdCard, staffOnly: true },
+      { to: '/documents', label: 'nav.documents', icon: FileText },
     ],
   },
   {

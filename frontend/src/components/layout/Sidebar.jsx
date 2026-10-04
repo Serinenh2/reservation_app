@@ -4,10 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import { X } from 'lucide-react'
 import { api } from '@/lib/api'
 import { cn } from '@/lib/cn'
+import { useAuth } from '@/features/auth/AuthProvider'
 import { NAV_SECTIONS } from './navigation'
 
 export default function Sidebar({ open, onClose }) {
   const { t } = useTranslation()
+  const { user } = useAuth()
   const { data: settings } = useQuery({
     queryKey: ['settings'],
     queryFn: () => api.get('/settings/').then((r) => r.data),
@@ -39,7 +41,7 @@ export default function Sidebar({ open, onClose }) {
             <div key={i} className={cn(i > 0 && 'mt-6')}>
               {section.title && <p className="mb-2 px-3 text-sm font-semibold text-sidebar-muted">{t(section.title)}</p>}
               <ul className="space-y-0.5">
-                {section.items.map(({ to, label, icon: Icon, end, phase }) => (
+                {section.items.filter((item) => !item.staffOnly || user?.is_staff).map(({ to, label, icon: Icon, end, phase }) => (
                   <li key={to}>
                     <NavLink
                       to={to}

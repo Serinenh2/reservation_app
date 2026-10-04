@@ -15,7 +15,9 @@
     "settings": "Paramètres",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
-    "eventTypes": "Types d'occasion"
+    "eventTypes": "Types d'occasion",
+    "employees": "Employés",
+    "documents": "Documents"
   },
   "common": {
     "save": "Enregistrer",
@@ -107,7 +109,9 @@
     "emailHint": "Envoyez un email de test pour vérifier la configuration.",
     "testEmailTo": "Adresse de test",
     "sendTest": "Envoyer un email de test",
-    "testQueued": "Email de test envoyé à la file d'attente."
+    "testQueued": "Email de test envoyé à la file d'attente.",
+    "companyNameAr": "Nom de l'entreprise en arabe",
+    "companyNameArHint": "Utilisé dans l'engagement : « قاعة الأفراح والمناسبات … »."
   },
   "notFound": {
     "title": "Page introuvable",
@@ -143,7 +147,12 @@
       "conflict": "Action impossible dans l'état actuel.",
       "option_required": "Choisissez une option pour ce service.",
       "invalid_option": "Cette option n'appartient pas à ce service.",
-      "option_in_use": "Une option supprimée est utilisée par des réservations : gardez-la."
+      "option_in_use": "Une option supprimée est utilisée par des réservations : gardez-la.",
+      "file_type": "Type de fichier non accepté.",
+      "file_too_big": "Fichier trop volumineux.",
+      "end_before_start": "La date de départ est avant la date d'embauche.",
+      "absence_exists": "Une absence est déjà enregistrée ce jour-là.",
+      "outside_employment": "Cette date est en dehors de la période de travail."
     }
   },
   "clients": {
@@ -178,7 +187,12 @@
     "since_zero": "Aucune réservation",
     "since_one": "{{count}} réservation",
     "since_other": "{{count}} réservations",
-    "owes": "reste {{amount}} à payer"
+    "owes": "reste {{amount}} à payer",
+    "idCard": "Pièce d'identité",
+    "idCardNumber": "Numéro de la carte",
+    "idCardIssuedOn": "Délivrée le",
+    "idCardIssuedAt": "Délivrée à",
+    "idCardIssued": "Délivrée le {{date}} à {{place}}"
   },
   "catalog": {
     "name": "Nom",
@@ -304,7 +318,11 @@
     "eventType": "Type d'occasion",
     "chooseEventType": "Choisir un type…",
     "occasionHint": "Le prix dépend de la formule et du nombre d'invités.",
-    "occasionColumn": "Occasion"
+    "occasionColumn": "Occasion",
+    "guestsChildren": "Enfants",
+    "childrenCount_one": "{{count}} enfant",
+    "childrenCount_other": "{{count}} enfants",
+    "childrenNotInTotal": "Les enfants ne comptent pas dans le total ni dans le prix."
   },
   "payments": {
     "title": "Paiements",
@@ -370,5 +388,92 @@
     "edit": "Modifier le type",
     "empty": "Aucun type d'occasion",
     "emptyText": "Ajoutez : mariage, fiançailles, fatha…"
+  },
+  "employees": {
+    "title": "Employés",
+    "subtitle": "Équipe, ancienneté, salaires et absences. Visible uniquement par les administrateurs.",
+    "new": "Nouvel employé",
+    "edit": "Modifier l'employé",
+    "saved": "Employé enregistré.",
+    "deleted": "Employé supprimé.",
+    "name": "Nom",
+    "lastName": "Nom",
+    "firstName": "Prénom",
+    "position": "Poste",
+    "positionHint": "Ex. cuisinier, serveur, ménage…",
+    "noPosition": "Poste non indiqué",
+    "hireDate": "Date d'embauche",
+    "endDate": "Date de départ",
+    "endDateHint": "À remplir seulement s'il a quitté l'entreprise.",
+    "salary": "Salaire mensuel",
+    "seniority": "Ancienneté",
+    "years_one": "{{count}} an",
+    "years_other": "{{count}} ans",
+    "months_one": "{{count}} mois",
+    "months_other": "{{count}} mois",
+    "and": " et ",
+    "lessThanMonth": "Moins d'un mois",
+    "current": "En poste",
+    "former": "Parti",
+    "currentPlural": "En poste",
+    "formerPlural": "Anciens",
+    "absencesThisMonth": "Absences ce mois",
+    "empty": "Aucun employé",
+    "emptyText": "Ajoutez les membres de votre équipe.",
+    "notFound": "Employé introuvable",
+    "backToList": "Retour aux employés",
+    "info": "Informations",
+    "addPhoto": "Ajouter une photo",
+    "changePhoto": "Changer la photo",
+    "photoHint": "JPG, PNG ou WebP, 5 Mo maximum.",
+    "idDocument": "Pièce d'identité",
+    "uploadDocument": "Téléverser la pièce",
+    "replaceDocument": "Remplacer la pièce",
+    "documentOnFile": "Une pièce est déjà enregistrée.",
+    "documentHint": "Photo ou PDF, 10 Mo maximum. Visible uniquement par les administrateurs.",
+    "noDocument": "Aucune pièce d'identité enregistrée.",
+    "openPdf": "Ouvrir le PDF",
+    "openFull": "Ouvrir en grand",
+    "removeDocument": "Supprimer la pièce",
+    "keepDocument": "Garder la pièce",
+    "removeDocumentTitle": "Supprimer la pièce d'identité ?",
+    "removeDocumentText": "Le fichier sera définitivement effacé du serveur.",
+    "documentRemoved": "Pièce d'identité supprimée.",
+    "deleteTitle": "Supprimer {{name}} ?",
+    "deleteText": "L'employé, ses absences, sa photo et sa pièce d'identité seront définitivement supprimés.",
+    "deleteConfirm": "Supprimer l'employé",
+    "keep": "Garder l'employé",
+    "absences": "Absences",
+    "addAbsence": "Ajouter une absence",
+    "absenceKind": "Type d'absence",
+    "absenceDays_one": "jour d'absence",
+    "absenceDays_other": "jours d'absence",
+    "noAbsences": "Aucune absence ce mois-ci.",
+    "absenceAdded": "Absence enregistrée.",
+    "absenceRemoved": "Absence supprimée.",
+    "removeAbsence": "Supprimer l'absence",
+    "kinds": {
+      "unjustified": "Non justifiée",
+      "justified": "Justifiée",
+      "sick": "Maladie",
+      "leave": "Congé"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Reçu de paiement et engagement du client, à télécharger en PDF ou Word puis à imprimer.",
+    "receipt": "Reçu de paiement",
+    "receiptHint": "Choisissez la réservation.",
+    "pickFirst": "Aucune réservation choisie",
+    "pickFirstText": "Cherchez un client ou choisissez une prochaine réservation à gauche.",
+    "upcoming": "Prochaines réservations",
+    "amountFor": "Montant du reçu",
+    "totalPaid": "Total versé : {{amount}}",
+    "noPayment": "Aucun paiement enregistré : le montant du reçu est 0. Ajoutez d'abord un paiement sur la réservation.",
+    "downloadFailed": "Le téléchargement a échoué. Réessayez.",
+    "choose": "Document",
+    "engagement": "Engagement (تعهد)",
+    "engagementHint": "Rempli avec la réservation et la fiche du client.",
+    "missingInfo": "À compléter pour un document complet : {{fields}}. Sinon une ligne pointillée sera laissée pour l'écrire à la main."
   }
 }

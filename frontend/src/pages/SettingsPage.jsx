@@ -76,6 +76,9 @@ export default function SettingsPage() {
             <Field label={t('settings.companyName')} error={errorFor('company_name')}>
               <Input value={form.company_name} onChange={set('company_name')} required />
             </Field>
+            <Field label={t('settings.companyNameAr')} optional hint={t('settings.companyNameArHint')}>
+              <Input value={form.company_name_ar || ''} onChange={set('company_name_ar')} lang="ar" dir="rtl" />
+            </Field>
             <Field label={t('settings.companyPhone')} optional>
               <Input type="tel" value={form.company_phone} onChange={set('company_phone')} />
             </Field>

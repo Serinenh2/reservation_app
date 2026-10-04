@@ -39,6 +39,8 @@ class Reservation(models.Model):
     # the occasion price tiers). Set by the serializer, never typed.
     guests_women = models.PositiveIntegerField(default=0)
     guests_men = models.PositiveIntegerField(default=0)
+    # Children are counted apart (commitment rule 09); not in `guests`, which sets the price.
+    guests_children = models.PositiveIntegerField(default=0)
     guests = models.PositiveIntegerField(default=0)
 
     base_price = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal("0"))])

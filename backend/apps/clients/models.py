@@ -9,6 +9,10 @@ class Client(models.Model):
     phone_alt = models.CharField(max_length=40, blank=True)
     email = models.EmailField(blank=True)
     address = models.CharField(max_length=255, blank=True)
+    # ID card (printed on the commitment document "تعهد و إلتزام").
+    id_card_number = models.CharField(max_length=40, blank=True)
+    id_card_issued_on = models.DateField(null=True, blank=True)
+    id_card_issued_at = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

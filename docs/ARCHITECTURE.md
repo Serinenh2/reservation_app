@@ -48,6 +48,7 @@ backend/
     catalog/         Occasion, ExtraService (never deleted: archived)
     reservations/    Reservation, ReservationService, Payment, BlockedDate,
                      services.py (prices, overlaps, status), calendar
+    staff/           Employee (photo, ID document, salary), Absence. Admins only.
     -- planned --
     backups/         Phase 6
 ```
@@ -78,6 +79,11 @@ tested without HTTP.
 | DELETE | `/api/reservations/<id>/payments/<payment_id>/` | staff |
 | GET / POST / DELETE | `/api/blocked-dates/` (`?upcoming=1`) | read: logged in, write: staff |
 | GET | `/api/calendar/?start=&end=` (max 62 days) | logged in |
+| GET / POST | `/api/employees/` (`?status=current\|former &month=YYYY-MM`), multipart | staff |
+| GET / PATCH / DELETE | `/api/employees/<id>/` | staff |
+| GET / DELETE | `/api/employees/<id>/photo/`, `/id-document/` (the private file) | staff |
+| GET / POST | `/api/employees/<id>/absences/` (`?month=YYYY-MM`) | staff |
+| DELETE | `/api/employees/<id>/absences/<absence_id>/` | staff |
 
 Validation errors are short codes (`{"event_date": ["time_conflict"]}`);
 the frontend translates them from `errors.codes.*` in the locale files.
@@ -112,6 +118,8 @@ frontend/src/
   features/catalog/      occasions + services (one page, two kinds)
   features/reservations/ list, form, detail + payments, pricing preview
   features/calendar/     month view, blocked dates
+  features/employees/    list, detail (absences by month), form with uploads
+  features/documents/    receipt (A5) + commitment "تعهد و إلتزام" (A4): preview, PDF (browser rendering), Word (docx)
 ```
 
 A feature folder will contain its API hooks (`api.js`), its components,
@@ -126,3 +134,14 @@ and its pages, so a feature can be read top to bottom in one place.
   `rtl:-scale-x-100`.
 - Phone numbers, times, amounts and emails stay `dir="ltr"` inside Arabic text.
 - Charts keep `dir="ltr"` on their container and reverse the time axis in Arabic.
+
+## Uploaded files (employee photos and ID documents)
+
+- Stored in `DATA_DIR/media/employees/<id>/` (the same Docker volume as the
+  database), under random names.
+- **No public URL**: Django never serves `MEDIA_ROOT`. Files are only sent by
+  `/api/employees/<id>/photo/` and `/id-document/`, which require an
+  administrator token. The frontend downloads them with the token and shows
+  them from a temporary local URL (`useAuthedFile`).
+- Checked on upload: extension **and** the file's first bytes (JPG, PNG,
+  WebP, PDF), photo ≤ 5 MB, ID document ≤ 10 MB.

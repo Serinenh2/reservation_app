@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ClipboardList, Mail, MapPin, Pencil, Phone, Plus, Users } from 'lucide-react'
-import { formatMoney } from '@/lib/format'
+import { ClipboardList, IdCard, Mail, MapPin, Pencil, Phone, Plus, Users } from 'lucide-react'
+import { formatDate, formatMoney } from '@/lib/format'
 import { Button, Card, EmptyState, FullPageSpinner, PageHeader, Pagination, StatCard } from '@/components/ui'
 import ReservationTable from '@/features/reservations/ReservationTable'
 import { useReservations } from '@/features/reservations/api'
@@ -46,6 +46,16 @@ export default function ClientDetailPage() {
             {client.phone_alt && <Contact icon={Phone}><span dir="ltr" className="tabular">{client.phone_alt}</span></Contact>}
             {client.email && <Contact icon={Mail}><a href={`mailto:${client.email}`} className="hover:underline">{client.email}</a></Contact>}
             {client.address && <Contact icon={MapPin}>{client.address}</Contact>}
+            {client.id_card_number && (
+              <Contact icon={IdCard}>
+                <span dir="ltr" className="tabular">{client.id_card_number}</span>
+                {(client.id_card_issued_on || client.id_card_issued_at) && (
+                  <span className="block text-sm text-muted">
+                    {t('clients.idCardIssued', { date: client.id_card_issued_on ? formatDate(client.id_card_issued_on) : '—', place: client.id_card_issued_at || '—' })}
+                  </span>
+                )}
+              </Contact>
+            )}
           </ul>
           {client.notes && <p className="whitespace-pre-line border-t border-line px-5 py-4 text-base text-muted">{client.notes}</p>}
         </Card>

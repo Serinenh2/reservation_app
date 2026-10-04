@@ -12,6 +12,8 @@ class AppSettings(models.Model):
     """
 
     company_name = models.CharField(max_length=150, default="Dar El Afrah")
+    # Arabic name, used in Arabic documents ("قاعة الأفراح والمناسبات ...").
+    company_name_ar = models.CharField(max_length=150, blank=True)
     company_phone = models.CharField(max_length=40, blank=True)
     company_email = models.EmailField(blank=True)
     company_address = models.CharField(max_length=255, blank=True)

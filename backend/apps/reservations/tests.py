@@ -92,6 +92,7 @@ class ReservationApiTests(APITestCase):
             "end_time": "01:00",
             "guests_women": 120,
             "guests_men": 130,
+            "guests_children": 30,
             "discount_type": "fixed",
             "discount_value": 10000,
             "services": [{"service": self.dj.id, "quantity": 1}],
@@ -107,6 +108,7 @@ class ReservationApiTests(APITestCase):
         res = self.create(total=1)
         self.assertEqual(res.status_code, 201, res.data)
         self.assertEqual(res.data["base_price"], 150000)  # from the occasion
+        self.assertEqual((res.data["guests"], res.data["guests_children"]), (250, 30))  # children not in the total
         self.assertEqual(res.data["total"], 160000)
         self.assertEqual(res.data["status"], "pending")
         self.assertEqual(res.data["services"][0]["unit_price"], 20000)

@@ -7,7 +7,7 @@
 | 3 | Reservation form, server-side price calculation, discount (fixed / %), payments in instalments, status from minimum payment | ✅ done |
 | 4 | Monthly calendar with status colors, overlap detection (including after midnight), blocked dates | ✅ done |
 | 5 | Search and filters, client history (dashboard removed at the owner's request) | ✅ done |
-| 6 | Printable summary + PDF (WeasyPrint, Arabic shaping), email confirmations, backup export/restore, final polish | next |
+| 6 | Payment receipt (Documents page, PDF + Word, Arabic RTL) ✅ · email confirmations, backup export/restore, final polish | next |
 
 ## Phase 1 verification
 
