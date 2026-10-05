@@ -34,7 +34,7 @@ export default function DocumentsPage() {
 
   return (
     <>
-      <PageHeader title={t('documents.title')} description={t('documents.subtitle')} />
+      <PageHeader title={t('documents.title')} />
       <div className="grid gap-6 xl:grid-cols-[22rem_1fr]">
         <Card className="self-start">
           <Card.Header title={t('documents.choose')} description={t('documents.receiptHint')} />

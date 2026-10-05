@@ -10,8 +10,6 @@ import { Badge, Card, EmptyState, Input, PageHeader, Spinner, StatCard, StatusBa
 import ReservationTable from '@/features/reservations/ReservationTable'
 import { endsNextDay } from '@/features/reservations/pricing'
 
-const EXAMPLES = ['15/10/2026', '10/2026', 'Benali', '0550']
-
 /**
  * One box to find anything. The server decides what the text is:
  * a day (15/10/2026), a month (10/2026), or a client / worker.
@@ -51,14 +49,6 @@ export default function SearchPage() {
               autoFocus
             />
             {isFetching && <Spinner className="absolute end-4 top-1/2 h-5 w-5 -translate-y-1/2 text-subtle" />}
-          </div>
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-muted">
-            <span>{t('search.examples')}</span>
-            {EXAMPLES.map((example) => (
-              <button key={example} type="button" onClick={() => setText(example)} className="rounded-full border border-line px-2.5 py-0.5 font-medium text-ink hover:bg-sunken" dir="ltr">
-                {example}
-              </button>
-            ))}
           </div>
         </Card.Body>
       </Card>

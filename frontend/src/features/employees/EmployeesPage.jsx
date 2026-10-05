@@ -61,7 +61,6 @@ export default function EmployeesPage() {
     <>
       <PageHeader
         title={t('employees.title')}
-        description={t('employees.subtitle')}
         actions={<Button icon={Plus} onClick={() => setAdding(true)}>{t('employees.new')}</Button>}
       />
       <Card>

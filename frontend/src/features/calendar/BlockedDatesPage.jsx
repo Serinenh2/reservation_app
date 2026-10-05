@@ -36,7 +36,7 @@ export default function BlockedDatesPage() {
     <>
       <PageHeader
         title={t('blocked.title')}
-        description={canEdit ? t('blocked.subtitle') : t('catalog.readOnly')}
+        description={canEdit ? undefined : t('catalog.readOnly')}
         actions={canEdit && <Button variant="danger" icon={Plus} onClick={() => setAdding(true)}>{t('blocked.add')}</Button>}
       />
       <Card>

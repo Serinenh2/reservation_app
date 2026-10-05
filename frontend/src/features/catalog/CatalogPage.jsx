@@ -82,7 +82,7 @@ export default function CatalogPage({ kind }) {
     <>
       <PageHeader
         title={t(`${ns}.title`)}
-        description={canEdit ? t(`${ns}.subtitle`) : t('catalog.readOnly')}
+        description={canEdit ? i18n.exists(`${ns}.subtitle`) && t(`${ns}.subtitle`) : t('catalog.readOnly')}
         actions={canEdit && <Button icon={Plus} onClick={() => setEditing({})}>{t(`${ns}.new`)}</Button>}
       />
       <Card>

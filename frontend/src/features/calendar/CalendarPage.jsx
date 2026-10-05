@@ -88,7 +88,6 @@ export default function CalendarPage() {
     <>
       <PageHeader
         title={t('calendar.title')}
-        description={t('calendar.subtitle')}
         actions={<Button icon={Plus} onClick={() => navigate(`/reservations/new?date=${selected}`)}>{t('dashboard.createFirst')}</Button>}
       />
 

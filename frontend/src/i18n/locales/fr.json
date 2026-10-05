@@ -211,7 +211,6 @@
   },
   "occasions": {
     "title": "Formules",
-    "subtitle": "Ce qui est servi (dîner + thé, café…) et son prix selon le nombre de personnes.",
     "new": "Nouvelle formule",
     "edit": "Modifier la formule",
     "price": "Prix unique",
@@ -228,7 +227,6 @@
   },
   "services": {
     "title": "Services supplémentaires",
-    "subtitle": "Options ajoutées à une réservation (DJ, décoration, photographe…).",
     "new": "Nouveau service",
     "edit": "Modifier le service",
     "price": "Prix unitaire",
@@ -354,7 +352,6 @@
   },
   "calendar": {
     "title": "Calendrier",
-    "subtitle": "Cliquez sur un jour, puis sur + pour le réserver.",
     "previous": "Mois précédent",
     "next": "Mois suivant",
     "legend": "Légende",
@@ -368,7 +365,6 @@
   },
   "blocked": {
     "title": "Dates bloquées",
-    "subtitle": "Jours où aucune réservation n'est possible (fermeture, travaux…).",
     "add": "Bloquer une date",
     "addHint": "Aucune réservation ne pourra être faite ce jour-là.",
     "confirm": "Bloquer la date",
@@ -385,7 +381,6 @@
   },
   "eventTypes": {
     "title": "Types d'occasion",
-    "subtitle": "Ce que le client célèbre : mariage, fiançailles, fatha…",
     "new": "Nouveau type",
     "edit": "Modifier le type",
     "empty": "Aucun type d'occasion",
@@ -393,7 +388,6 @@
   },
   "employees": {
     "title": "Employés",
-    "subtitle": "Équipe, ancienneté, salaires et absences. Visible uniquement par les administrateurs.",
     "new": "Nouvel employé",
     "edit": "Modifier l'employé",
     "saved": "Employé enregistré.",
@@ -463,7 +457,6 @@
   },
   "documents": {
     "title": "Documents",
-    "subtitle": "Reçu de paiement et engagement du client, à télécharger en PDF ou Word puis à imprimer.",
     "receipt": "Reçu de paiement",
     "receiptHint": "Choisissez la réservation.",
     "pickFirst": "Aucune réservation choisie",
@@ -482,7 +475,6 @@
     "title": "Recherche",
     "subtitle": "Une date, un mois, un nom, un téléphone ou un numéro de carte : tout se cherche ici.",
     "placeholder": "Ex. 15/10/2026, 10/2026, Benali, 0550 12 34 56…",
-    "examples": "Exemples :",
     "start": "Que cherchez-vous ?",
     "startText": "Tapez une date pour voir qui l'a réservée, ou un client pour voir ses réservations et ce qu'il reste à payer.",
     "free": "Libre",
