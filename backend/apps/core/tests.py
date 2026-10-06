@@ -51,3 +51,54 @@ class EmailTaskTests(APITestCase):
         # Without Redis, the task runs inline (eager mode).
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, ["client@example.com"])
+
+
+class InitialDataTests(APITestCase):
+    """The venue setup is loaded on the first launch only, and never undoes the client's changes."""
+
+    def setUp(self):
+        import tempfile
+
+        from django.test import override_settings
+
+        self.data_dir = tempfile.mkdtemp()
+        self.override = override_settings(DATA_DIR=self.data_dir)
+        self.override.enable()
+
+    def tearDown(self):
+        import shutil
+
+        self.override.disable()
+        shutil.rmtree(self.data_dir, ignore_errors=True)
+
+    def load(self):
+        from django.core.management import call_command
+
+        call_command("load_initial_data", verbosity=0, stdout=__import__("io").StringIO())
+
+    def test_first_launch_loads_the_setup_then_never_again(self):
+        from apps.catalog.models import ExtraService, Occasion
+
+        self.load()
+        self.assertTrue(Occasion.objects.exists())
+        self.assertTrue(ExtraService.objects.exists())
+        self.assertTrue(Occasion.objects.filter(tiers__isnull=False).exists())  # price grids too
+        self.assertEqual(AppSettings.load().company_name_ar, "إيمان الذهبية")
+
+        # The client deletes a service and renames the venue...
+        ExtraService.objects.first().delete()
+        remaining = ExtraService.objects.count()
+        settings = AppSettings.load()
+        settings.company_name = "Nouveau nom"
+        settings.save()
+        # ...the next start must not bring anything back.
+        self.load()
+        self.assertEqual(ExtraService.objects.count(), remaining)
+        self.assertEqual(AppSettings.load().company_name, "Nouveau nom")
+
+    def test_existing_setup_is_kept(self):
+        from apps.catalog.models import EventType
+
+        EventType.objects.create(name_fr="Henné", name_ar="حنة")
+        self.load()
+        self.assertEqual(list(EventType.objects.values_list("name_fr", flat=True)), ["Henné"])

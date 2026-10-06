@@ -39,12 +39,19 @@ Changez au minimum `DJANGO_SECRET_KEY` (une longue phrase au hasard) et
 
 ## 3. Démarrer
 
-```powershell
-docker compose up -d --build
-```
+**Double-cliquez sur `Ouvrir Réservations.bat`** (dans le dossier du projet).
 
-Attendez environ une minute, puis ouvrez **http://localhost:3000**.
+Il démarre Docker Desktop si besoin, lance l'application puis ouvre
+**http://localhost:3000** dans le navigateur. La toute première fois,
+il prépare l'application : comptez quelques minutes (internet nécessaire
+une seule fois).
+
 Connectez-vous avec `ADMIN_USERNAME` / `ADMIN_PASSWORD` du fichier `.env`.
+
+> Astuce : clic droit sur le fichier → *Envoyer vers* → *Bureau (créer un
+> raccourci)*, pour l'avoir sur le bureau.
+
+Équivalent en ligne de commande : `docker compose up -d --build`.
 
 ## 4. Arrêter / redémarrer
 
@@ -62,17 +69,54 @@ Connectez-vous avec `ADMIN_USERNAME` / `ADMIN_PASSWORD` du fichier `.env`.
 Les données sont dans un volume Docker (`db_data`) et survivent aux arrêts,
 redémarrages et mises à jour.
 
-## 5. Sauvegarder la base de données
+## 5. Sauvegarder
 
-L'export/restauration depuis l'interface arrive à la phase 6. En attendant,
-copie manuelle (application démarrée) :
+**Double-cliquez sur `Sauvegarde.bat`.** Il crée dans le dossier `backups/` :
+
+| Fichier | Contenu |
+|---|---|
+| `sauvegarde_AAAA-MM-JJ_HH-MM.sqlite3` | toute la base : réservations, clients, paiements, employés, paramètres |
+| `fichiers_AAAA-MM-JJ_HH-MM.tar.gz` | les fichiers importés : photos et pièces d'identité (s'il y en a) |
+
+Copiez **les deux** sur une clé USB ou un disque externe, au moins une fois
+par semaine. La sauvegarde peut se faire pendant que l'application est
+utilisée.
+
+> Pour restaurer une sauvegarde, demandez de l'aide : la restauration depuis
+> l'interface arrive avec la phase 6.
+
+## Mettre l'application sur l'ordinateur de la salle
+
+1. Installez Docker Desktop (étape 1).
+2. Copiez le dossier du projet où vous voulez (par exemple `C:\reservations-app`).
+   Les deux fichiers `.bat` fonctionnent quel que soit l'emplacement.
+3. Créez le fichier `.env` (étape 2).
+4. Double-cliquez sur `Ouvrir Réservations.bat`.
+
+### Données de départ (services, prix…)
+
+Au **tout premier lancement**, l'application charge automatiquement la
+configuration préparée : paramètres de l'entreprise, types d'occasion,
+formules avec leurs grilles de prix, services avec leurs options. Ni clients,
+ni réservations, ni employés.
+
+Ce chargement n'a lieu **qu'une seule fois** : ensuite, le client peut tout
+modifier ou supprimer, rien ne revient au redémarrage ni lors d'une mise à
+jour.
+
+Pour mettre à jour cette configuration avant une installation, sur
+l'ordinateur de développement (dans `backend`, environnement activé) :
 
 ```powershell
-docker compose exec backend python -c "import sqlite3; s=sqlite3.connect('/app/data/db.sqlite3'); d=sqlite3.connect('/app/backups/manuel.sqlite3'); s.backup(d)"
+python manage.py export_initial_data
 ```
 
-Le fichier apparaît dans le dossier `backups/` du projet. Copiez-le sur une
-clé USB ou un disque externe.
+Cela réécrit `backend/apps/core/fixtures/initial_data.json` avec la
+configuration actuelle. Enregistrez-le dans git avec le reste.
+
+Pour une **mise à jour** de l'application : remplacez les dossiers
+`backend/` et `frontend/` par la nouvelle version, puis lancez dans le dossier
+du projet `docker compose up -d --build`. Les données sont conservées.
 
 ## 6. Créer d'autres comptes
 

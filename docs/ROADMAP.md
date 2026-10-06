@@ -17,8 +17,9 @@
 - [x] French LTR / Arabic RTL, desktop and mobile
 - [x] Light / dark / system theme
 - [x] Settings saved by staff, read-only for others, negative minimum refused by the backend
-- [ ] `docker compose up -d --build` on the target Windows laptop
-- [ ] Restart Docker, check data persists (spec scenario 6)
+- [x] `docker compose up -d --build` (via `Ouvrir Réservations.bat`): 4 containers healthy, queue on Redis
+- [x] Restart backend/worker, data and uploaded files persist (spec scenario 6)
+- [x] `Sauvegarde.bat`: database copy passes integrity check, files archive matches it
 
 ## Phases 2-5 verification
 
