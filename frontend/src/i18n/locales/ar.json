@@ -411,7 +411,8 @@
     "eventCount_other": "{{count}} حجز",
     "free": "لا توجد حجوزات في هذا اليوم.",
     "bookThisDay": "حجز هذا اليوم",
-    "blockThisDay": "إغلاق هذا اليوم"
+    "blockThisDay": "إغلاق هذا اليوم",
+    "freeLegend": "متاح"
   },
   "blocked": {
     "title": "التواريخ المغلقة",

@@ -33,6 +33,12 @@
 
   --c-success: 21 128 82;
   --c-success-soft: 224 243 233;
+  /* Confirmed reservations */
+  --c-info: 37 99 235;
+  --c-info-soft: 219 234 254;
+  /* Free days in the calendar: a light green, with a dark green day number */
+  --c-free: 150 214 172;
+  --c-free-fg: 14 72 42;
   --c-warning: 196 98 6;
   --c-warning-soft: 253 237 218;
   --c-danger: 190 44 52;
@@ -69,6 +75,10 @@
 
   --c-success: 74 196 138;
   --c-success-soft: 20 52 40;
+  --c-info: 110 168 250;
+  --c-info-soft: 22 38 78;
+  --c-free: 46 140 92;
+  --c-free-fg: 240 253 246;
   --c-warning: 242 160 72;
   --c-warning-soft: 60 40 18;
   --c-danger: 242 112 118;

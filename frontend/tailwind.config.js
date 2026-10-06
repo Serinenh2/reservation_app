@@ -34,6 +34,8 @@ export default {
         gold: { DEFAULT: token('gold'), ink: token('gold-ink'), soft: token('gold-soft') },
         // Status colors are ONLY for reservation/payment states.
         success: { DEFAULT: token('success'), soft: token('success-soft') },
+        info: { DEFAULT: token('info'), soft: token('info-soft') },
+        free: { DEFAULT: token('free'), fg: token('free-fg') },
         warning: { DEFAULT: token('warning'), soft: token('warning-soft') },
         danger: { DEFAULT: token('danger'), soft: token('danger-soft') },
         neutral: { DEFAULT: token('neutral'), soft: token('neutral-soft') },

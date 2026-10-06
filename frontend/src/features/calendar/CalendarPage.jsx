@@ -15,14 +15,15 @@ const WEEK_START = 6
 const CHIP = {
   // White chips so they stand out on the colored cell.
   success: 'border-success/40 bg-surface text-success',
+  info: 'border-info/40 bg-surface text-info',
   warning: 'border-warning/40 bg-surface text-warning',
   danger: 'border-danger/40 bg-surface text-danger',
   neutral: 'border-line bg-surface text-neutral line-through decoration-1',
 }
-const DOT = { success: 'bg-success', warning: 'bg-warning', danger: 'bg-danger', neutral: 'bg-neutral' }
+const DOT = { success: 'bg-success', info: 'bg-info', warning: 'bg-warning', danger: 'bg-danger', neutral: 'bg-neutral' }
 
 /** Whole-cell background: the day takes the color of its reservations. */
-const CELL = { success: 'bg-success-soft', warning: 'bg-warning-soft', danger: 'bg-danger-soft', neutral: 'bg-neutral-soft' }
+const CELL = { success: 'bg-success-soft', info: 'bg-info-soft', warning: 'bg-warning-soft', danger: 'bg-danger-soft', neutral: 'bg-neutral-soft' }
 
 /**
  * One status for the whole day when it has several reservations:
@@ -139,6 +140,11 @@ function Legend() {
   const { t } = useTranslation()
   return (
     <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted" aria-label={t('calendar.legend')}>
+      {/* Free days: deep green, set apart from the reservation statuses */}
+      <li className="flex items-center gap-1.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-free" aria-hidden />
+        {t('calendar.freeLegend')}
+      </li>
       {['confirmed', 'pending', 'blocked', 'cancelled'].map((s) => (
         <li key={s} className="flex items-center gap-1.5">
           <span className={cn('h-2.5 w-2.5 rounded-full', DOT[STATUS_TONES[s]])} aria-hidden />
@@ -156,13 +162,15 @@ function DayCell({ iso, day, inMonth, isToday, isSelected, isPast, reservations,
   const active = reservations.filter((r) => r.status !== 'cancelled').length
   const status = blocked ? 'blocked' : dayStatus(reservations)
   const canBook = !blocked && !isPast
+  // Free: nothing at all on that day (no reservation, not blocked), today or later.
+  const isFree = !status && !isPast
 
   return (
     <div
       className={cn(
         'group relative min-h-[5.5rem] border-b border-e border-line p-1 text-start transition-colors md:min-h-[8.5rem] md:p-1.5 [&:nth-child(7n)]:border-e-0',
-        status ? CELL[STATUS_TONES[status]] : !inMonth && 'bg-sunken/40',
-        status && !inMonth && 'opacity-60',
+        status ? CELL[STATUS_TONES[status]] : isFree ? 'bg-free' : !inMonth && 'bg-sunken/40',
+        (status || isFree) && !inMonth && 'opacity-60',
         isSelected && 'ring-2 ring-inset ring-gold',
       )}
     >
@@ -178,7 +186,7 @@ function DayCell({ iso, day, inMonth, isToday, isSelected, isPast, reservations,
         <span
           className={cn(
             'tabular grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-semibold',
-            isToday ? 'bg-brand text-brand-fg' : inMonth ? (isPast ? 'text-muted' : 'text-ink') : 'text-subtle',
+            isToday ? 'bg-brand text-brand-fg' : isFree ? 'text-free-fg' : inMonth ? (isPast ? 'text-muted' : 'text-ink') : 'text-subtle',
           )}
         >
           {day}

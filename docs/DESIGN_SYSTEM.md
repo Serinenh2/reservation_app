@@ -30,10 +30,14 @@ Defined once in `frontend/src/styles/tokens.css`, mapped to Tailwind in
 
 | Status | Token | Meaning |
 |---|---|---|
-| Confirmée / مؤكدة | `success` (green) | payment reached the confirmation minimum |
+| Confirmée / مؤكدة | `info` (blue) | payment reached the confirmation minimum |
 | En attente / قيد الانتظار | `warning` (orange) | not enough paid yet |
 | Date bloquée / تاريخ مغلق | `danger` (red) | blocked date, destructive actions |
 | Annulée / ملغاة | `neutral` (grey) | kept in history |
+
+In the calendar, free days (no reservation, not blocked, today or later)
+are filled with `free` (light green, dark green day number).
+`success` (green) stays for money that has been paid.
 
 They are **never** used for decoration. The mapping status → color lives in
 one place: `STATUS_TONES` in `components/ui/Badge.jsx`.

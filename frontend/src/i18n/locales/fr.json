@@ -361,7 +361,8 @@
     "eventCount_other": "{{count}} réservations",
     "free": "Aucune réservation ce jour-là.",
     "bookThisDay": "Réserver ce jour",
-    "blockThisDay": "Bloquer ce jour"
+    "blockThisDay": "Bloquer ce jour",
+    "freeLegend": "Libre"
   },
   "blocked": {
     "title": "Dates bloquées",

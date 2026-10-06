@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn'
 
 const tones = {
   success: 'bg-success-soft text-success',
+  info: 'bg-info-soft text-info',
   warning: 'bg-warning-soft text-warning',
   danger: 'bg-danger-soft text-danger',
   neutral: 'bg-neutral-soft text-neutral',
@@ -21,10 +22,11 @@ export default function Badge({ tone = 'neutral', dot = false, className, childr
 
 /**
  * The ONE place that maps a reservation status to a color.
- * Spec: confirmed = green, pending = orange, blocked = red, cancelled = grey.
+ * confirmed = blue, pending = orange, blocked = red, cancelled = grey.
+ * (Green is kept for money paid and, in the calendar, for free days.)
  */
 export const STATUS_TONES = {
-  confirmed: 'success',
+  confirmed: 'info',
   pending: 'warning',
   blocked: 'danger',
   cancelled: 'neutral',
