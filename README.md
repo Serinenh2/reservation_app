@@ -87,24 +87,49 @@ utilisée.
 
 ## Mettre l'application sur l'ordinateur de la salle
 
-**Copiez le dossier du projet sur l'ordinateur (clé USB…), puis
-double-cliquez sur `install.bat`.** Il fait tout :
+1. Copiez le dossier du projet sur l'ordinateur (clé USB, ou ZIP téléchargé
+   depuis GitHub puis **extrait**). Évitez de lancer l'installation
+   directement depuis l'intérieur du ZIP.
+2. **Double-cliquez sur `install.bat`** et cliquez sur **Oui** quand Windows
+   demande l'autorisation administrateur.
+   - Si Windows affiche « Windows a protégé votre ordinateur » : cliquez sur
+     *Informations complémentaires* puis *Exécuter quand même*.
+   - N'ouvrez pas `install.ps1` directement : Windows bloque les scripts
+     PowerShell par défaut, c'est `install.bat` qui le lance correctement.
+3. Suivez les questions (nom et mot de passe de l'administrateur, accès réseau).
 
-1. installe WSL 2 et Docker Desktop s'ils manquent (Windows demande
-   l'autorisation administrateur ; si un redémarrage est demandé,
-   relancez ensuite `install.bat`) ;
-2. copie l'application dans `C:\reservations-app` ;
-3. crée le fichier `.env` : clé secrète aléatoire, et vous demande le nom et
-   le mot de passe de l'administrateur ;
-4. vous demande si d'autres ordinateurs ou téléphones du réseau doivent
-   accéder à l'application (il ouvre alors le pare-feu et affiche l'adresse
-   à utiliser, par exemple `http://192.168.1.20:3000`) ;
-5. fait démarrer Docker Desktop avec Windows, construit et lance l'application ;
-6. crée deux raccourcis sur le bureau : **Reservations** et
-   **Sauvegarde Reservations**.
+L'installation :
+
+- vérifie l'ordinateur : Windows 10 22H2 / Windows 11 en 64 bits,
+  virtualisation activée dans le BIOS, mémoire, espace disque, port 3000 libre ;
+- installe WSL 2 et Docker Desktop s'ils manquent (internet nécessaire,
+  environ 600 Mo). **Elle demande alors de redémarrer : redémarrez puis
+  relancez `install.bat`** ;
+- copie l'application dans `C:\reservations-app` ;
+- crée le fichier `.env` (clé secrète aléatoire, compte administrateur) ;
+- si vous le demandez, ouvre l'accès aux autres ordinateurs et téléphones du
+  réseau (pare-feu) et affiche l'adresse à utiliser, par exemple
+  `http://192.168.1.20:3000` ;
+- fait démarrer Docker Desktop avec Windows, construit et lance l'application
+  (5 à 15 minutes la première fois), puis vérifie qu'elle répond ;
+- crée deux raccourcis sur le bureau : **Reservations** et
+  **Sauvegarde Reservations**.
 
 `install.bat` peut être relancé sans risque, par exemple pour une mise à
 jour : les données et le fichier `.env` existants sont conservés.
+
+### En cas de problème
+
+Tout le déroulement est enregistré dans **`install-log.txt`**, à côté de
+`install.bat`. Les messages d'erreur indiquent quoi faire :
+
+| Message | Que faire |
+|---|---|
+| virtualisation désactivée dans le BIOS | Redémarrer, entrer dans le BIOS (F2, F10, Suppr ou Échap), activer *Intel VT-x* ou *SVM (AMD)*, relancer `install.bat` |
+| Windows trop ancien | Faire les mises à jour Windows (Windows 10 22H2 minimum) |
+| port 3000 déjà utilisé | Fermer ou désinstaller le programme indiqué |
+| Docker ne démarre pas | Ouvrir Docker Desktop, accepter ce qu'il demande (conditions, mise à jour WSL), attendre « Engine running », relancer `install.bat` |
+| la construction a échoué | Vérifier internet et relancer `install.bat` |
 
 Installation manuelle (sans `install.bat`) : installez Docker Desktop
 (étape 1), créez `.env` (étape 2), puis double-cliquez sur

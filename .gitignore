@@ -11,3 +11,4 @@ backend/data/
 backend/staticfiles/
 backups/*
 !backups/.gitkeep
+install-log.txt
