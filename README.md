@@ -87,11 +87,28 @@ utilisée.
 
 ## Mettre l'application sur l'ordinateur de la salle
 
-1. Installez Docker Desktop (étape 1).
-2. Copiez le dossier du projet où vous voulez (par exemple `C:\reservations-app`).
-   Les deux fichiers `.bat` fonctionnent quel que soit l'emplacement.
-3. Créez le fichier `.env` (étape 2).
-4. Double-cliquez sur `Ouvrir Réservations.bat`.
+**Copiez le dossier du projet sur l'ordinateur (clé USB…), puis
+double-cliquez sur `install.bat`.** Il fait tout :
+
+1. installe WSL 2 et Docker Desktop s'ils manquent (Windows demande
+   l'autorisation administrateur ; si un redémarrage est demandé,
+   relancez ensuite `install.bat`) ;
+2. copie l'application dans `C:\reservations-app` ;
+3. crée le fichier `.env` : clé secrète aléatoire, et vous demande le nom et
+   le mot de passe de l'administrateur ;
+4. vous demande si d'autres ordinateurs ou téléphones du réseau doivent
+   accéder à l'application (il ouvre alors le pare-feu et affiche l'adresse
+   à utiliser, par exemple `http://192.168.1.20:3000`) ;
+5. fait démarrer Docker Desktop avec Windows, construit et lance l'application ;
+6. crée deux raccourcis sur le bureau : **Reservations** et
+   **Sauvegarde Reservations**.
+
+`install.bat` peut être relancé sans risque, par exemple pour une mise à
+jour : les données et le fichier `.env` existants sont conservés.
+
+Installation manuelle (sans `install.bat`) : installez Docker Desktop
+(étape 1), créez `.env` (étape 2), puis double-cliquez sur
+`Ouvrir Réservations.bat`.
 
 ### Données de départ (services, prix…)
 
